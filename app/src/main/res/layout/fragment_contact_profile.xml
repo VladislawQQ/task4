@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.contactProfile.ContactProfileFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/content_start"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/content_end"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/content_top"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.03" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/content_bottom"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.97" />
+
+    <View
+        android:id="@+id/fragment_my_profile_view_top"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/view_color"
+
+        app:layout_constraintHeight_percent="0.5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/fragment_my_profile_text_view_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_back"
+
+        app:layout_constraintTop_toTopOf="@+id/fragment_my_profile_text_view_profile"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_my_profile_text_view_profile"
+        app:layout_constraintStart_toStartOf="@id/content_start"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fragment_my_profile_text_view_profile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:text="@string/profile"
+        android:textAppearance="@style/open_sans_font"
+        android:textColor="@color/label_text_color"
+        android:textSize="@dimen/fragment_my_profile_settings_text_size"
+        android:gravity="center"
+
+        app:layout_constraintEnd_toEndOf="@id/content_end"
+        app:layout_constraintStart_toStartOf="@id/content_start"
+        app:layout_constraintTop_toTopOf="@id/content_top" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/fragment_my_profile_image_view_profile_photo"
+        android:layout_width="@dimen/fragment_my_profile_photo_size"
+        android:layout_height="@dimen/fragment_my_profile_photo_size"
+        android:layout_marginTop="@dimen/margin_big"
+        android:src="@drawable/profile_photo"
+
+        app:layout_constraintTop_toBottomOf="@id/fragment_my_profile_text_view_profile"
+        app:layout_constraintBottom_toTopOf="@id/fragment_my_profile_text_view_profile_name"
+        app:layout_constraintStart_toStartOf="@id/content_start"
+        app:layout_constraintEnd_toEndOf="@id/content_end"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fragment_my_profile_text_view_profile_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_medium"
+
+        android:textAppearance="@style/open_sans_font"
+        android:text="@string/name_surname"
+        android:textColor="@color/label_text_color"
+        android:textSize="@dimen/fragment_my_profile_name_text_size"
+
+        app:layout_constraintTop_toBottomOf="@id/fragment_my_profile_image_view_profile_photo"
+        app:layout_constraintEnd_toEndOf="@id/fragment_my_profile_image_view_profile_photo"
+        app:layout_constraintStart_toStartOf="@+id/fragment_my_profile_image_view_profile_photo"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fragment_my_profile_text_view_career"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_small"
+
+        android:textAppearance="@style/open_sans_font"
+        android:text="@string/career"
+        android:textColor="@color/label_secondary_text_color"
+        android:textSize="@dimen/fragment_my_profile_career_text_size"
+
+        app:layout_constraintEnd_toEndOf="@+id/fragment_my_profile_text_view_profile_name"
+        app:layout_constraintStart_toStartOf="@+id/fragment_my_profile_text_view_profile_name"
+        app:layout_constraintTop_toBottomOf="@id/fragment_my_profile_text_view_profile_name" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fragment_my_profile_text_view_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_small"
+
+        android:textAppearance="@style/open_sans_font"
+        android:text="@string/home_address"
+        android:textColor="@color/label_secondary_text_color"
+        android:textSize="@dimen/fragment_my_profile_address_text_size"
+
+        app:layout_constraintEnd_toEndOf="@id/fragment_my_profile_text_view_career"
+        app:layout_constraintStart_toStartOf="@+id/fragment_my_profile_text_view_career"
+        app:layout_constraintTop_toBottomOf="@id/fragment_my_profile_text_view_career" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/fragment_my_profile_flow_social_media"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:constraint_referenced_ids="fragment_my_profile_image_view_facebook, fragment_my_profile_image_view_linked_in, fragment_my_profile_image_view_instagram"
+        app:flow_horizontalGap="@dimen/fragment_my_profile_icon_gap"
+        app:flow_horizontalStyle="packed"
+        app:flow_wrapMode="aligned"
+
+        app:layout_constraintBottom_toTopOf="@id/fragment_my_profile_button_message"
+        app:layout_constraintEnd_toEndOf="@id/content_end"
+        app:layout_constraintStart_toStartOf="@id/content_start"
+        app:layout_constraintTop_toBottomOf="@id/fragment_my_profile_view_top" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/fragment_my_profile_image_view_facebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/facebook_icon"
+        android:focusable="true"
+
+        app:srcCompat="@drawable/ic_facebook"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/fragment_my_profile_image_view_linked_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/linkedin_icon"
+
+        app:srcCompat="@drawable/ic_linked_in"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/fragment_my_profile_image_view_instagram"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/instagram_icon"
+
+        app:srcCompat="@drawable/ic_instagram"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/fragment_my_profile_button_message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/open_sans_font"
+        android:background="@drawable/button_view_my_contacts"
+        android:paddingVertical="@dimen/fragment_my_profile_button_padding"
+
+        android:text="@string/message"
+        android:textColor="@color/label_text_color"
+        android:textSize="@dimen/fragment_my_profile_button_text_size"
+        android:textAllCaps="true"
+
+        app:layout_constraintStart_toStartOf="@id/content_start"
+        app:layout_constraintEnd_toEndOf="@id/content_end"
+        app:layout_constraintBottom_toBottomOf="@id/content_bottom"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

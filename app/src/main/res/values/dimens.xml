@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_big">24dp</dimen>
+
+    <dimen name="padding_small">8dp</dimen>
+
+    <!-- fragment profile dimens -->
+
+    <dimen name="fragment_my_profile_icon_gap">32dp</dimen>
+    <dimen name="fragment_my_profile_button_gap">16dp</dimen>
+    <dimen name="fragment_my_profile_photo_size">100dp</dimen>
+    <dimen name="fragment_my_profile_settings_text_size">24sp</dimen>
+    <dimen name="fragment_my_profile_name_text_size">18sp</dimen>
+    <dimen name="fragment_my_profile_button_text_size">16sp</dimen>
+    <dimen name="fragment_my_profile_career_text_size">14sp</dimen>
+    <dimen name="fragment_my_profile_address_text_size">14sp</dimen>
+    <dimen name="fragment_my_profile_go_to_settings_text_size">14sp</dimen>
+    <dimen name="fragment_my_profile_button_padding">16dp</dimen>
+
+    <!-- fragment auth dimens -->
+
+    <dimen name="fragment_auth_text_size_medium">12sp</dimen>
+    <dimen name="fragment_auth_text_size_big">14sp</dimen>
+    <dimen name="fragment_auth_text_size_largest">18sp</dimen>
+
+    <dimen name="fragment_auth_sign_in_texts_gap">12dp</dimen>
+    <dimen name="fragment_auth_buttons_gap">8dp</dimen>
+
+    <dimen name="fragment_auth_button_text_size">16sp</dimen>
+    <dimen name="fragment_auth_title_text_size">24sp</dimen>
+
+    <!-- fragment my contacts -->
+
+    <dimen name="fragment_my_contacts_text_size_contacts_label">24sp</dimen>
+
+    <!-- contact item -->
+
+    <dimen name="contact_item_size_profile_photo">50dp</dimen>
+    <dimen name="contact_item_size_icon_delete">35dp</dimen>
+    <dimen name="contact_item_text_size_name">18sp</dimen>
+    <dimen name="contact_item_text_size_career">14sp</dimen>
+    <dimen name="contact_item_text_size_add_contact">18sp</dimen>
+
+    <!-- dialog add contact -->
+    <dimen name="dialog_add_contact_size_profile_photo">70dp</dimen>
+    <dimen name="dialog_add_contact_size_set_profile_photo">40dp</dimen>
+    <dimen name="dialog_add_contact_margin_start_set_profile_photo">24dp</dimen>
+    <dimen name="dialog_add_contact_button_text_size_save">16sp</dimen>
+
+</resources>

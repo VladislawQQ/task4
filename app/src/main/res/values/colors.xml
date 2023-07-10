@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    // core colors
+    <color name="view_color">#242235</color>
+    <color name="label_text_color">#FFFFFFFF</color>
+    <color name="label_secondary_text_color">#BDBDBD</color>
+
+    // fragment auth
+    <color name="google_btn_text">#18181F</color>
+
+    // fragment my profile
+    <color name="fragment_my_profile_text_view_fill_out_profile">#000</color>
+    <color name="fragment_my_profile_button_edit_profile">#000</color>
+
+    // fragment my contacts
+
+    // contact item
+    <color name="contact_item_name_color">#FF000000</color>
+    <color name="contact_item_career_color">#B2B2B3</color>
+
+    // text input layout
+    <color name="text_input_edit_text_text_color">#FAFAFA</color>
+    <color name="text_input_layout_error_msg_color">#F93E3E</color>
+    <color name="text_input_layout_hint">#B2B2B3</color>
+
+    // snackbar color
+    <color name="contacts_activity_class_snackbar_text_color">#000</color>
+    <color name="contacts_activity_class_snackbar_action_color">#FF6200EE</color>
+</resources>

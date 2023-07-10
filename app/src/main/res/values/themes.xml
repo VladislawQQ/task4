@@ -1,0 +1,16 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.Task3" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/view_color</item>
+        <item name="colorPrimaryVariant">@color/label_text_color</item>
+        <item name="colorOnPrimary">@color/label_secondary_text_color</item>
+
+        <item name="colorOnSurface">@color/label_text_color</item> // Normal State
+        <!-- Secondary brand color. -->
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/view_color</item>
+        <item name="android:navigationBarColor">@color/view_color</item>
+        <!-- Customize your theme here. -->
+    </style>
+</resources>

@@ -67,9 +67,7 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts), Confirmation
                 logExt(contact.toString())
                 logExt(contactViewModel.getContactIndex(contact).toString())
                 val direction = MyContactsFragmentDirections
-                    .actionMyContactsFragmentToContactProfileFragment(
-                        arrayOf(contact.name, contact.career, contact.photo)
-                    )
+                    .actionMyContactsFragmentToContactProfileFragment(contact)
 
                 findNavController().navigate(direction)
             }

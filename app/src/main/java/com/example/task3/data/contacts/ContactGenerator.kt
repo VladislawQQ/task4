@@ -6,14 +6,13 @@ import com.example.task3.data.contacts.model.Contact
 import com.github.javafaker.Faker
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.Random
-import java.util.UUID
 
 class ContactGenerator {
     private val faker = Faker.instance()
 
     fun generateContacts(): MutableStateFlow<List<Contact>> {
         return MutableStateFlow(
-            List(15) { randomContact(id = UUID.randomUUID().mostSignificantBits) }
+            List(15) { randomContact() }
             )
     }
 
@@ -22,16 +21,14 @@ class ContactGenerator {
         career: String
     ): Contact {
         return Contact(
-            id = UUID.randomUUID().mostSignificantBits,
             name = userName.ifBlank { faker.name().fullName() },
             career = career,
             photo = ""
         )
     }
 
-    private fun randomContact(id: Long): Contact {
+    private fun randomContact(): Contact {
         return Contact(
-            id = id,
             name = faker.name().fullName(),
             career = faker.job().position(),
             photo = IMAGES[Random().nextInt(IMAGES.size - 1)]
@@ -56,12 +53,10 @@ class ContactGenerator {
 
         cursor?.use {
             if (cursor.count > 0) {
-                var id = 0L
 
                 while (cursor.moveToNext()) {
                     val name = cursor.use { ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME }
-                    val contact = Contact(id, "", name, "")
-                    id++
+                    val contact = Contact(photo = "", name = name, career = "")
 
                     contactList.add(contact)
                 }

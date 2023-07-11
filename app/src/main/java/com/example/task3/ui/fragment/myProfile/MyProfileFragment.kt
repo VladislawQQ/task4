@@ -1,6 +1,5 @@
 package com.example.task3.ui.fragment.myProfile
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -19,29 +18,37 @@ class MyProfileFragment : Fragment(R.layout.fragment_my_profile) {
     private lateinit var binding : FragmentMyProfileBinding
     private val args : MyProfileFragmentArgs by navArgs()
 
-    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMyProfileBinding.bind(view)
 
         askPermission()
-
-        binding.fragmentMyProfileButtonViewContacts.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_myProfileFragment_to_myContactsFragment
-            )
-        }
+        setListeners()
 
         val email = args.email
+        setNameByEmail(email)
+    }
 
+    private fun setNameByEmail(email: String) {
         if (email.isNotEmpty()) {
             val parsedName = parseEmail(email)
 
             val name = parsedName.first().replaceFirstChar { it.titlecase(Locale.getDefault()) }
             val surname = parsedName[1].replaceFirstChar { it.titlecase(Locale.getDefault()) }
+            val profileName = "$name $surname"
 
-            binding.fragmentMyProfileTextViewProfileName.text = "$name $surname"
+            binding.fragmentMyProfileTextViewProfileName.text = profileName
         }
+    }
+
+    private fun setListeners() {
+        binding.fragmentMyProfileButtonViewContacts.setOnClickListener { viewMyContactsButton() }
+    }
+
+    private fun viewMyContactsButton() {
+        findNavController().navigate(
+            R.id.action_myProfileFragment_to_myContactsFragment
+        )
     }
 
 
@@ -68,7 +75,6 @@ class MyProfileFragment : Fragment(R.layout.fragment_my_profile) {
     companion object {
         private var READ_CONTACTS_GRANTED = false
         private const val REGEX_EMAIL_PARSE = "@.*\$"
-
     }
 
 }

@@ -11,7 +11,7 @@ import com.example.task3.databinding.FragmentAuthBinding
 
 class AuthenticationFragment : Fragment(R.layout.fragment_auth) {
 
-    private lateinit var binding : FragmentAuthBinding
+    private lateinit var binding: FragmentAuthBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -20,33 +20,37 @@ class AuthenticationFragment : Fragment(R.layout.fragment_auth) {
         // Email and password validation
         emailErrorChanges()
         passwordErrorChanges()
-
-        binding.fragmentAuthButtonRegister.setOnClickListener { registerButtonListener() }
-        binding.fragmentAuthButtonGoogle.setOnClickListener {
-            val email = binding.fragmentAuthEditTextEmail.text.toString()
-
-            val direction = AuthenticationFragmentDirections
-                .actionAuthenticationFragmentToMyProfileFragment(email)
-
-            findNavController().navigate(direction) }
-
+        
+        setListeners()
     }
 
-    private fun registerButtonListener() {
+    private fun setListeners() {
+        binding.fragmentAuthButtonRegister.setOnClickListener { registerButtonListenerAction() }
+        binding.fragmentAuthButtonGoogle.setOnClickListener { googleButtonListenerAction() }
+    }
+
+    private fun googleButtonListenerAction() {
+        val email = binding.fragmentAuthEditTextEmail.text.toString()
+
+        val direction = AuthenticationFragmentDirections
+            .actionAuthenticationFragmentToMyProfileFragment(email)
+
+        findNavController().navigate(direction)
+    }
+
+    private fun registerButtonListenerAction() {
         with(binding) {
-        if (!fieldsIsEmpty() &&
-            fragmentAuthEditTextEmail.text.toString() != "" &&
-            fragmentAuthEditTextPassword.text.toString() != "") {
+            if (!fieldsIsEmpty() &&
+                fragmentAuthEditTextEmail.text.toString() != "" &&
+                fragmentAuthEditTextPassword.text.toString() != ""
+            ) {
+                val email = fragmentAuthEditTextEmail.text.toString()
 
-            val email = fragmentAuthEditTextEmail.text.toString()
+                val direction = AuthenticationFragmentDirections
+                    .actionAuthenticationFragmentToMyProfileFragment(email)
 
-            val direction = AuthenticationFragmentDirections
-                .actionAuthenticationFragmentToMyProfileFragment(email)
-
-            findNavController().navigate(direction)
-
-            // TODO: anim
-        }
+                findNavController().navigate(direction)
+            }
         }
     }
 
@@ -63,11 +67,10 @@ class AuthenticationFragment : Fragment(R.layout.fragment_auth) {
      */
     private fun emailIsValid(): String? {
         val emailText = binding.fragmentAuthEditTextEmail.text.toString()
-
         val isValid = Patterns.EMAIL_ADDRESS.matcher(emailText).matches()
-        if (!isValid) {
+
+        if (!isValid)
             return getString(R.string.invalid_email_address)
-        }
 
         return null
     }
@@ -87,7 +90,7 @@ class AuthenticationFragment : Fragment(R.layout.fragment_auth) {
         val passwordText = binding.fragmentAuthEditTextPassword.text.toString()
 
         return if (passwordText.contains(" ")) {
-            return getString(R.string.dont_use_spaces)
+            getString(R.string.dont_use_spaces)
         } else if (passwordText.length < 8) {
             getString(R.string.min_8_chars_pass)
         } else if (!REGEX_UPPER_CASE.toRegex().containsMatchIn(passwordText)) {
@@ -101,9 +104,8 @@ class AuthenticationFragment : Fragment(R.layout.fragment_auth) {
         val validEmail = binding.fragmentAuthContainerEmail.error == null
         val validPassword = binding.fragmentAuthContainerPassword.error == null
 
-        if (validEmail && validPassword) {
+        if (validEmail && validPassword)
             return false
-        }
 
         return true
     }

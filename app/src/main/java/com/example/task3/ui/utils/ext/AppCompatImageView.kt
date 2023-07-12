@@ -1,5 +1,6 @@
 package com.example.task3.ui.utils.ext
 
+import android.graphics.drawable.Drawable
 import androidx.appcompat.widget.AppCompatImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
@@ -15,7 +16,16 @@ val GLIDE_OPTIONS = RequestOptions()
     .priority(Priority.HIGH)
 
 fun AppCompatImageView.setContactPhoto(
-    contactPhotoUri: String = "android.resource://com.example.task2/drawable/profile_photo"
+    contactPhotoUri: String = "android.resource://com.example.task3/drawable/profile_photo"
+) {
+    Glide.with(context)
+        .load(contactPhotoUri)
+        .apply(GLIDE_OPTIONS)
+        .into(this)
+}
+
+fun AppCompatImageView.setContactPhoto(
+    contactPhotoUri: Drawable
 ) {
     Glide.with(context)
         .load(contactPhotoUri)

@@ -35,9 +35,8 @@ class ContactGenerator {
         )
     }
 
-    fun getPhoneContacts(): MutableStateFlow<List<Contact>> {
+    fun getPhoneContacts(): MutableList<Contact> {
 
-        val contacts = MutableStateFlow<List<Contact>>(emptyList())
         val contactList : MutableList<Contact> = ArrayList()
 
         val contentResolver = App.contentResolverInstance
@@ -60,11 +59,10 @@ class ContactGenerator {
 
                     contactList.add(contact)
                 }
-                contacts.value = contactList
             }
         }
 
-        return contacts
+        return contactList
     }
 
     companion object {

@@ -77,6 +77,7 @@
         android:layout_height="@dimen/fragment_my_profile_photo_size"
         android:layout_marginTop="@dimen/margin_big"
         android:src="@drawable/profile_photo"
+        android:transitionName="contact_profile_transition"
 
         app:layout_constraintTop_toBottomOf="@id/fragment_my_profile_text_view_profile"
         app:layout_constraintBottom_toTopOf="@id/fragment_my_profile_text_view_profile_name"

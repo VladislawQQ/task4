@@ -1,7 +1,7 @@
 package com.example.task3.data.contacts
 
-import android.util.Log
 import com.example.task3.data.contacts.model.Contact
+import com.example.task3.ui.utils.ext.logExt
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class ContactService {
@@ -11,11 +11,11 @@ class ContactService {
 
     init {
         if (contacts.value.isEmpty()) {
-            var contactsPhone = MutableStateFlow<List<Contact>>(emptyList())
+            val contactsPhone = MutableStateFlow<List<Contact>>(emptyList())
             try {
-                contactsPhone = contactProvider.getPhoneContacts()
+                contactsPhone.value = contactProvider.getPhoneContacts()
             } catch (e: Exception) {
-                Log.d("myLog", "Catch! ${e.message}")
+                logExt("Catch! ${e.message}")
             }
 
             contacts =

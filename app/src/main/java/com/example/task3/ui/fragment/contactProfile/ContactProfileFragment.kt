@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.transition.TransitionInflater
 import com.example.task3.R
 import com.example.task3.data.contacts.model.Contact
 import com.example.task3.databinding.FragmentContactProfileBinding
@@ -21,8 +22,19 @@ class ContactProfileFragment : Fragment(R.layout.fragment_contact_profile){
 
         val contact : Contact = args.contact
 
+        attachAnimation()
         bindContactInfo(contact)
         setListeners()
+    }
+
+    /*
+            Shared element transition. Not working. (view pager?)
+     */
+    private fun attachAnimation() {
+        val animation = TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+
+        sharedElementEnterTransition = animation
+        sharedElementReturnTransition = animation
     }
 
     private fun setListeners() {

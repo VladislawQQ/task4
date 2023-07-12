@@ -5,8 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.task3.data.contacts.ContactGenerator
-import com.example.task3.ui.utils.ext.setContactPhoto
 import com.example.task3.databinding.DialogAddContactBinding
+import com.example.task3.ui.utils.ext.setContactPhoto
 
 class AddContactDialogFragment : DialogFragment() {
 

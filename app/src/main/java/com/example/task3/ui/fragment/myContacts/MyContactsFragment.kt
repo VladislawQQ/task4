@@ -8,18 +8,20 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task3.data.contacts.model.Contact
 import com.example.task3.R
+import com.example.task3.databinding.ContactItemBinding
 import com.example.task3.databinding.FragmentMyContactsBinding
 import com.example.task3.ui.fragment.addContact.AddContactDialogFragment
 import com.example.task3.ui.fragment.addContact.ConfirmationListener
 import com.example.task3.ui.fragment.myContacts.adapter.ContactActionListener
 import com.example.task3.ui.fragment.myContacts.adapter.ContactAdapter
-import com.example.task3.ui.utils.ext.logExt
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
@@ -63,13 +65,15 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts), Confirmation
                 showDeleteMessage(index, contact)
             }
 
-            override fun onContactClick(contact: Contact) {
-                logExt(contact.toString())
-                logExt(contactViewModel.getContactIndex(contact).toString())
-                val direction = MyContactsFragmentDirections
+            override fun onContactClick(bindingContactPhoto: ContactItemBinding, contact: Contact) {
+                val extras = FragmentNavigatorExtras(
+                    bindingContactPhoto.contactItemImageViewProfilePhoto to "contact_profile_transition"
+                )
+
+                val direction: NavDirections = MyContactsFragmentDirections
                     .actionMyContactsFragmentToContactProfileFragment(contact)
 
-                findNavController().navigate(direction)
+                findNavController().navigate(direction, extras)
             }
         })
 
@@ -81,10 +85,12 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts), Confirmation
     }
 
     private fun observeViewModel() {
+        postponeEnterTransition()
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 contactViewModel.contacts.collect {
                     adapter.submitList(it)
+                    startPostponedEnterTransition()
                 }
             }
         }
@@ -98,8 +104,7 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts), Confirmation
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
-            )
-                    : Boolean = false
+            ): Boolean = false
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val index = viewHolder.adapterPosition

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.task3.R
 import com.example.task3.databinding.FragmentMyProfileBinding
+import com.example.task3.ui.utils.ext.setContactPhoto
 import java.util.Locale
 
 class MyProfileFragment : Fragment(R.layout.fragment_my_profile) {
@@ -24,9 +25,16 @@ class MyProfileFragment : Fragment(R.layout.fragment_my_profile) {
 
         askPermission()
         setListeners()
+        roundProfilePhoto()
 
         val email = args.email
         setNameByEmail(email)
+    }
+
+    private fun roundProfilePhoto() {
+        binding.fragmentMyProfileImageViewProfilePhoto.setContactPhoto(
+            binding.fragmentMyProfileImageViewProfilePhoto.drawable
+        )
     }
 
     private fun setNameByEmail(email: String) {

@@ -1,6 +1,5 @@
 package com.example.task3.ui.fragment.myContacts.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -23,7 +22,6 @@ class ContactAdapter(
 
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
         holder.bind(currentList[position])
-        Log.d("myTag", currentList.size.toString())
     }
 
     inner class ContactViewHolder(
@@ -35,14 +33,12 @@ class ContactAdapter(
                 contactItemTextViewCareer.text = contact.career.replaceFirstChar { it.titlecase() }
 
                 contactItemImageViewBucket.setOnClickListener { contactActionListener.onContactDelete(contact) }
-                itemView.setOnClickListener { contactActionListener.onContactClick(contact) }
+                itemView.setOnClickListener { contactActionListener.onContactClick(binding, contact) }
 
                 with(contactItemImageViewProfilePhoto) {
-                    if (contact.photo.isNotBlank()) {
+                    if (contact.photo.isNotBlank())
                         setContactPhoto(contact.photo)
-                    } else {
-                        setContactPhoto()
-                    }
+                    else setContactPhoto()
                 }
             }
         }

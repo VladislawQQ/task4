@@ -33,9 +33,11 @@ class MyProfileFragment : Fragment(R.layout.fragment_my_profile) {
     }
 
     private fun roundProfilePhoto() {
-        binding.fragmentMyProfileImageViewProfilePhoto.setContactPhoto(
-            binding.fragmentMyProfileImageViewProfilePhoto.drawable
-        )
+        with(binding) {
+            fragmentMyProfileImageViewProfilePhoto.setContactPhoto(
+                fragmentMyProfileImageViewProfilePhoto.drawable
+            )
+        }
     }
 
     private fun setNameByEmail(email: String) {

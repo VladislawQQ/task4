@@ -13,6 +13,8 @@ object Constants {
     // Validation
     const val REGEX_UPPER_CASE = "[A-Z]"
     const val REGEX_DIGITS = "[0-9]"
-
     const val PASSWORD_LENGTH = 8
+
+    // Parse email
+    const val REGEX_EMAIL_PARSE = "@.*\$"
 }

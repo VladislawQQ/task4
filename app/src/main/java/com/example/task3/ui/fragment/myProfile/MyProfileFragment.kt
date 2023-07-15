@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.task3.R
 import com.example.task3.databinding.FragmentMyProfileBinding
+import com.example.task3.ui.utils.Constants.REGEX_EMAIL_PARSE
 import com.example.task3.ui.utils.ext.setContactPhoto
 import java.util.Locale
 
@@ -82,7 +83,6 @@ class MyProfileFragment : Fragment(R.layout.fragment_my_profile) {
 
     companion object {
         private var READ_CONTACTS_GRANTED = false
-        private const val REGEX_EMAIL_PARSE = "@.*\$"
     }
 
 }

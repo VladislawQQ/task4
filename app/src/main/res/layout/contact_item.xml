@@ -27,6 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/name_surname"
+            android:transitionName="contact_name"
 
             android:textAppearance="@style/open_sans_font"
             android:textColor="@color/contact_item_name_color"
@@ -37,6 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/career"
+            android:transitionName="contact_career"
 
             android:textAppearance="@style/open_sans_font"
             android:textColor="@color/contact_item_career_color"

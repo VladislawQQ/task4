@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task3.data.contacts.model.Contact
 import com.example.task3.R
-import com.example.task3.databinding.ContactItemBinding
 import com.example.task3.databinding.FragmentMyContactsBinding
 import com.example.task3.ui.fragment.addContact.AddContactDialogFragment
 import com.example.task3.ui.fragment.addContact.ConfirmationListener
@@ -65,10 +64,8 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts), Confirmation
                 showDeleteMessage(index, contact)
             }
 
-            override fun onContactClick(bindingContactPhoto: ContactItemBinding, contact: Contact) {
-                val extras = FragmentNavigatorExtras(
-                    bindingContactPhoto.contactItemImageViewProfilePhoto to "contact_profile_transition"
-                )
+            override fun onContactClick(contact: Contact, transitionNames: Array<Pair<View, String>>) {
+                val extras = FragmentNavigatorExtras(*transitionNames)
 
                 val direction: NavDirections = MyContactsFragmentDirections
                     .actionMyContactsFragmentToContactProfileFragment(contact)

@@ -9,6 +9,9 @@ import androidx.transition.TransitionInflater
 import com.example.task3.R
 import com.example.task3.data.contacts.model.Contact
 import com.example.task3.databinding.FragmentContactProfileBinding
+import com.example.task3.ui.utils.Constants.TRANSITION_NAME_CAREER
+import com.example.task3.ui.utils.Constants.TRANSITION_NAME_CONTACT_NAME
+import com.example.task3.ui.utils.Constants.TRANSITION_NAME_IMAGE
 import com.example.task3.ui.utils.ext.setContactPhoto
 
 class ContactProfileFragment : Fragment(R.layout.fragment_contact_profile){
@@ -27,11 +30,14 @@ class ContactProfileFragment : Fragment(R.layout.fragment_contact_profile){
         setListeners()
     }
 
-    /*
-            Shared element transition. Not working. (view pager?)
-     */
     private fun attachAnimation() {
-        val animation = TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+        with(binding) {
+            fragmentMyProfileImageViewProfilePhoto.transitionName = TRANSITION_NAME_IMAGE
+            fragmentMyProfileTextViewProfileName.transitionName = TRANSITION_NAME_CONTACT_NAME
+            fragmentMyProfileTextViewCareer.transitionName = TRANSITION_NAME_CAREER
+        }
+
+        val animation = TransitionInflater.from(requireContext()).inflateTransition(R.transition.transition_move)
 
         sharedElementEnterTransition = animation
         sharedElementReturnTransition = animation

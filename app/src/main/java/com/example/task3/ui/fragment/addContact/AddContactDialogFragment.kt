@@ -52,10 +52,4 @@ class AddContactDialogFragment : DialogFragment() {
     private fun imageViewBackListener() {
         dismiss()
     }
-
-
-    companion object {
-        const val TAG = "Add contact dialog"
-    }
-
 }

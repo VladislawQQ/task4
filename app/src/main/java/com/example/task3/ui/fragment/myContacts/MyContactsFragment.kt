@@ -14,13 +14,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.task3.data.contacts.model.Contact
 import com.example.task3.R
+import com.example.task3.data.contacts.model.Contact
 import com.example.task3.databinding.FragmentMyContactsBinding
 import com.example.task3.ui.fragment.addContact.AddContactDialogFragment
 import com.example.task3.ui.fragment.addContact.ConfirmationListener
 import com.example.task3.ui.fragment.myContacts.adapter.ContactActionListener
 import com.example.task3.ui.fragment.myContacts.adapter.ContactAdapter
+import com.example.task3.ui.utils.Constants.TAG
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
@@ -53,7 +54,7 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts), Confirmation
 
     private fun startDialogAddContact() {
         val addContactDialogFragment = AddContactDialogFragment()
-        addContactDialogFragment.show(childFragmentManager, AddContactDialogFragment.TAG)
+        addContactDialogFragment.show(childFragmentManager, TAG)
     }
 
     private fun bindRecycleView() {

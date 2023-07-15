@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.task3.R
 import com.example.task3.databinding.FragmentAuthBinding
+import com.example.task3.ui.utils.Constants.PASSWORD_LENGTH
+import com.example.task3.ui.utils.Constants.REGEX_DIGITS
+import com.example.task3.ui.utils.Constants.REGEX_UPPER_CASE
 
 class AuthenticationFragment : Fragment(R.layout.fragment_auth) {
 
@@ -25,11 +28,23 @@ class AuthenticationFragment : Fragment(R.layout.fragment_auth) {
     }
 
     private fun setListeners() {
-        binding.fragmentAuthButtonRegister.setOnClickListener { registerButtonListenerAction() }
-        binding.fragmentAuthButtonGoogle.setOnClickListener { googleButtonListenerAction() }
+        with(binding) {
+            fragmentAuthButtonRegister.setOnClickListener { registerButton() }
+            fragmentAuthButtonGoogle.setOnClickListener { googleButtonAction() }
+        }
     }
 
-    private fun googleButtonListenerAction() {
+    private fun googleButtonAction() {
+        startNextFragment()
+    }
+
+    private fun registerButton() {
+        if (!fieldsIsEmpty()) {
+            startNextFragment()
+        }
+    }
+
+    private fun startNextFragment() {
         val email = binding.fragmentAuthEditTextEmail.text.toString()
 
         val direction = AuthenticationFragmentDirections
@@ -38,25 +53,11 @@ class AuthenticationFragment : Fragment(R.layout.fragment_auth) {
         findNavController().navigate(direction)
     }
 
-    private fun registerButtonListenerAction() {
-        with(binding) {
-            if (!fieldsIsEmpty() &&
-                fragmentAuthEditTextEmail.text.toString() != "" &&
-                fragmentAuthEditTextPassword.text.toString() != ""
-            ) {
-                val email = fragmentAuthEditTextEmail.text.toString()
-
-                val direction = AuthenticationFragmentDirections
-                    .actionAuthenticationFragmentToMyProfileFragment(email)
-
-                findNavController().navigate(direction)
-            }
-        }
-    }
-
     private fun emailErrorChanges() {
-        binding.fragmentAuthEditTextEmail.doAfterTextChanged {
-            binding.fragmentAuthContainerEmail.error = emailIsValid()
+        with(binding) {
+            fragmentAuthEditTextEmail.doAfterTextChanged {
+                fragmentAuthContainerEmail.error = emailIsValid()
+            }
         }
     }
 
@@ -66,8 +67,8 @@ class AuthenticationFragment : Fragment(R.layout.fragment_auth) {
      * else return null
      */
     private fun emailIsValid(): String? {
-        val emailText = binding.fragmentAuthEditTextEmail.text.toString()
-        val isValid = Patterns.EMAIL_ADDRESS.matcher(emailText).matches()
+        val email = binding.fragmentAuthEditTextEmail.text.toString()
+        val isValid = Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
         if (!isValid)
             return getString(R.string.invalid_email_address)
@@ -76,8 +77,10 @@ class AuthenticationFragment : Fragment(R.layout.fragment_auth) {
     }
 
     private fun passwordErrorChanges() {
-        binding.fragmentAuthEditTextPassword.doAfterTextChanged {
-            binding.fragmentAuthContainerPassword.error = passwordIsValid()
+        with(binding) {
+            fragmentAuthEditTextPassword.doAfterTextChanged {
+                fragmentAuthContainerPassword.error = passwordIsValid()
+            }
         }
     }
 
@@ -91,7 +94,7 @@ class AuthenticationFragment : Fragment(R.layout.fragment_auth) {
 
         return if (passwordText.contains(" ")) {
             getString(R.string.dont_use_spaces)
-        } else if (passwordText.length < 8) {
+        } else if (passwordText.length < PASSWORD_LENGTH) {
             getString(R.string.min_8_chars_pass)
         } else if (!REGEX_UPPER_CASE.toRegex().containsMatchIn(passwordText)) {
             getString(R.string.contain_upper_case_chars)
@@ -101,18 +104,16 @@ class AuthenticationFragment : Fragment(R.layout.fragment_auth) {
     }
 
     private fun fieldsIsEmpty(): Boolean {
-        val validEmail = binding.fragmentAuthContainerEmail.error == null
-        val validPassword = binding.fragmentAuthContainerPassword.error == null
+        with(binding) {
+            val validEmail = fragmentAuthContainerEmail.error == null
+            val validPassword = fragmentAuthContainerPassword.error == null
+            val emailIsEmpty = fragmentAuthEditTextEmail.text.toString().isEmpty()
+            val passwordIsEmpty = fragmentAuthEditTextPassword.text.toString().isEmpty()
 
-        if (validEmail && validPassword)
-            return false
+            if (validEmail || validPassword || emailIsEmpty || passwordIsEmpty)
+                return false
 
-        return true
+            return true
+        }
     }
-
-    companion object {
-        private const val REGEX_UPPER_CASE = "[A-Z]"
-        private const val REGEX_DIGITS = "[0-9]"
-    }
-
 }

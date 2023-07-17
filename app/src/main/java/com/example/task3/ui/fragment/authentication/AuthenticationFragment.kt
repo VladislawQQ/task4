@@ -4,21 +4,18 @@ import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.example.task3.R
 import com.example.task3.databinding.FragmentAuthBinding
+import com.example.task3.ui.fragment.BaseFragment
 import com.example.task3.ui.utils.Constants.PASSWORD_LENGTH
 import com.example.task3.ui.utils.Constants.REGEX_DIGITS
 import com.example.task3.ui.utils.Constants.REGEX_UPPER_CASE
 
-class AuthenticationFragment : Fragment(R.layout.fragment_auth) {
-
-    private lateinit var binding: FragmentAuthBinding
+class AuthenticationFragment
+    : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::inflate) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentAuthBinding.bind(view)
 
         // Email and password validation
         emailErrorChanges()
@@ -48,9 +45,9 @@ class AuthenticationFragment : Fragment(R.layout.fragment_auth) {
         val email = binding.fragmentAuthEditTextEmail.text.toString()
 
         val direction = AuthenticationFragmentDirections
-            .actionAuthenticationFragmentToMyProfileFragment(email)
+            .actionAuthenticationFragmentToViewPagerFragment(email)
 
-        findNavController().navigate(direction)
+        navController.navigate(direction)
     }
 
     private fun emailErrorChanges() {

@@ -20,6 +20,7 @@ import com.example.task3.ui.fragment.addContact.AddContactDialogFragment
 import com.example.task3.ui.fragment.addContact.ConfirmationListener
 import com.example.task3.ui.fragment.myContacts.adapter.ContactActionListener
 import com.example.task3.ui.fragment.myContacts.adapter.ContactAdapter
+import com.example.task3.ui.fragment.viewpager.ViewPagerFragmentDirections
 import com.example.task3.ui.utils.Constants.TAG
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
@@ -47,7 +48,7 @@ class MyContactsFragment :
     }
 
     private fun imageViewBackListener() {
-        navController.popBackStack()
+        // todo : change to my profile tab
     }
 
     private fun startDialogAddContact() {
@@ -66,8 +67,8 @@ class MyContactsFragment :
             override fun onContactClick(contact: Contact, transitionNames: Array<Pair<View, String>>) {
                 val extras = FragmentNavigatorExtras(*transitionNames)
 
-                val direction: NavDirections = MyContactsFragmentDirections
-                    .actionMyContactsFragmentToContactProfileFragment(contact)
+                val direction: NavDirections = ViewPagerFragmentDirections
+                    .actionViewPagerFragmentToContactProfileFragment(contact)
 
                 navController.navigate(direction, extras)
             }

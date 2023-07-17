@@ -2,21 +2,46 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph_app"
+    android:id="@+id/main_nav_graph"
     app:startDestination="@id/authenticationFragment">
 
     <fragment
         android:id="@+id/authenticationFragment"
         android:name="com.example.task3.ui.fragment.authentication.AuthenticationFragment"
         android:label="fragment_auth"
-        tools:layout="@layout/fragment_auth">
+        tools:layout="@layout/fragment_auth" >
         <action
-            android:id="@+id/action_authenticationFragment_to_myProfileFragment"
-            app:destination="@id/myProfileFragment"
+            android:id="@+id/action_authenticationFragment_to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"/>
+    </fragment>
+    <fragment
+        android:id="@+id/viewPagerFragment"
+        android:name="com.example.task3.ui.fragment.viewpager.ViewPagerFragment"
+        android:label="fragment_view_pager"
+        tools:layout="@layout/fragment_view_pager">
+        <action
+            android:id="@+id/action_viewPagerFragment_to_contactProfileFragment"
+            app:destination="@id/contactProfileFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
+        <argument
+            android:name="email"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/contactProfileFragment"
+        android:name="com.example.task3.ui.fragment.contactProfile.ContactProfileFragment"
+        android:label="fragment_contact_profile"
+        tools:layout="@layout/fragment_contact_profile" >
+        <argument
+            android:name="contact"
+            app:argType="com.example.task3.data.contacts.model.Contact" />
     </fragment>
 
     <fragment
@@ -24,13 +49,6 @@
         android:name="com.example.task3.ui.fragment.myProfile.MyProfileFragment"
         android:label="fragment_my_profile"
         tools:layout="@layout/fragment_my_profile">
-        <action
-            android:id="@+id/action_myProfileFragment_to_myContactsFragment"
-            app:destination="@id/myContactsFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"/>
         <argument
             android:name="email"
             app:argType="string" />
@@ -41,19 +59,6 @@
         android:name="com.example.task3.ui.fragment.myContacts.MyContactsFragment"
         android:label="fragment_my_contacts"
         tools:layout="@layout/fragment_my_contacts">
-        <action
-            android:id="@+id/action_myContactsFragment_to_contactProfileFragment"
-            app:destination="@id/contactProfileFragment"/>
-    </fragment>
-
-    <fragment
-        android:id="@+id/contactProfileFragment"
-        android:name="com.example.task3.ui.fragment.contactProfile.ContactProfileFragment"
-        android:label="fragment_contact_profile"
-        tools:layout="@layout/fragment_contact_profile">
-        <argument
-            android:name="contact"
-            app:argType="com.example.task3.data.contacts.model.Contact" />
     </fragment>
 
 </navigation>

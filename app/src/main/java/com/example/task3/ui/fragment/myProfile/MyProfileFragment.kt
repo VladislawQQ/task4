@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.task3.R
 import com.example.task3.databinding.FragmentMyProfileBinding
 import com.example.task3.ui.fragment.BaseFragment
 import com.example.task3.ui.utils.Constants.REGEX_EMAIL_PARSE
@@ -56,9 +53,7 @@ class MyProfileFragment
     }
 
     private fun viewMyContactsButton() {
-        findNavController().navigate(
-            R.id.action_myProfileFragment_to_myContactsFragment
-        )
+        // todo : change to contacts list
     }
 
 

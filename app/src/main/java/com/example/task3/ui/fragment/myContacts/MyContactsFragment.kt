@@ -3,20 +3,19 @@ package com.example.task3.ui.fragment.myContacts
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task3.R
 import com.example.task3.data.contacts.model.Contact
 import com.example.task3.databinding.FragmentMyContactsBinding
+import com.example.task3.ui.fragment.BaseFragment
 import com.example.task3.ui.fragment.addContact.AddContactDialogFragment
 import com.example.task3.ui.fragment.addContact.ConfirmationListener
 import com.example.task3.ui.fragment.myContacts.adapter.ContactActionListener
@@ -25,16 +24,15 @@ import com.example.task3.ui.utils.Constants.TAG
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
-class MyContactsFragment : Fragment(R.layout.fragment_my_contacts), ConfirmationListener {
-
-    private lateinit var binding : FragmentMyContactsBinding
-    private lateinit var adapter: ContactAdapter
+class MyContactsFragment :
+    BaseFragment<FragmentMyContactsBinding>(FragmentMyContactsBinding::inflate),
+    ConfirmationListener {
 
     private val contactViewModel : MyContactsViewModel by viewModels()
+    private lateinit var adapter: ContactAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentMyContactsBinding.bind(view)
 
         bindRecycleView()
         observeViewModel()
@@ -49,7 +47,7 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts), Confirmation
     }
 
     private fun imageViewBackListener() {
-        findNavController().popBackStack()
+        navController.popBackStack()
     }
 
     private fun startDialogAddContact() {
@@ -71,7 +69,7 @@ class MyContactsFragment : Fragment(R.layout.fragment_my_contacts), Confirmation
                 val direction: NavDirections = MyContactsFragmentDirections
                     .actionMyContactsFragmentToContactProfileFragment(contact)
 
-                findNavController().navigate(direction, extras)
+                navController.navigate(direction, extras)
             }
         })
 

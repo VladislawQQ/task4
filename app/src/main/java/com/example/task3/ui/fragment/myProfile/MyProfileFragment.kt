@@ -11,25 +11,23 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.task3.R
 import com.example.task3.databinding.FragmentMyProfileBinding
+import com.example.task3.ui.fragment.BaseFragment
 import com.example.task3.ui.utils.Constants.REGEX_EMAIL_PARSE
 import com.example.task3.ui.utils.ext.setContactPhoto
 import java.util.Locale
 
-class MyProfileFragment : Fragment(R.layout.fragment_my_profile) {
+class MyProfileFragment
+    : BaseFragment<FragmentMyProfileBinding>(FragmentMyProfileBinding::inflate) {
 
-    private lateinit var binding : FragmentMyProfileBinding
     private val args : MyProfileFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentMyProfileBinding.bind(view)
 
         askPermission()
         setListeners()
         roundProfilePhoto()
-
-        val email = args.email
-        setNameByEmail(email)
+        setNameByEmail(args.email)
     }
 
     private fun roundProfilePhoto() {
@@ -40,15 +38,16 @@ class MyProfileFragment : Fragment(R.layout.fragment_my_profile) {
         }
     }
 
-    private fun setNameByEmail(email: String) {
-        if (email.isNotEmpty()) {
-            val parsedName = parseEmail(email)
+    private fun setNameByEmail(email: String): String {
+        val parsedName = parseEmail(email)
 
+        return if (parsedName.size > 1) {
             val name = parsedName.first().replaceFirstChar { it.titlecase(Locale.getDefault()) }
             val surname = parsedName[1].replaceFirstChar { it.titlecase(Locale.getDefault()) }
-            val profileName = "$name $surname"
 
-            binding.fragmentMyProfileTextViewProfileName.text = profileName
+            "$name $surname"
+        } else {
+            parsedName.first()
         }
     }
 
@@ -64,8 +63,7 @@ class MyProfileFragment : Fragment(R.layout.fragment_my_profile) {
 
 
     private fun parseEmail(email: String): List<String> {
-        return REGEX_EMAIL_PARSE.toRegex().replace(email, "")
-            .split(".")
+        return REGEX_EMAIL_PARSE.toRegex().replace(email, "").split(".")
     }
 
 

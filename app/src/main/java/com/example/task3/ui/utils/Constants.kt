@@ -17,4 +17,7 @@ object Constants {
 
     // Parse email
     const val REGEX_EMAIL_PARSE = "@.*\$"
+
+    // ViewPager2
+    const val FRAGMENT_COUNT = 2
 }

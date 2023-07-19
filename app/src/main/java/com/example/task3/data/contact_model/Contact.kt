@@ -1,4 +1,4 @@
-package com.example.task3.data.contacts.model
+package com.example.task3.data.contact_model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

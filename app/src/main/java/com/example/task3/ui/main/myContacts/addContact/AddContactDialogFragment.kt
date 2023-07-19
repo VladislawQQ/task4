@@ -1,4 +1,4 @@
-package com.example.task3.ui.fragment.addContact
+package com.example.task3.ui.main.myContacts.addContact
 
 import android.app.Dialog
 import android.os.Bundle

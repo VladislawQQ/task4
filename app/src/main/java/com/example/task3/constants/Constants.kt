@@ -1,4 +1,4 @@
-package com.example.task3.ui.utils
+package com.example.task3.constants
 
 object Constants {
 

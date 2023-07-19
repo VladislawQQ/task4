@@ -1,4 +1,4 @@
-package com.example.task3.ui.fragment.myContacts
+package com.example.task3.ui.main.myContacts
 
 import android.os.Bundle
 import android.view.View
@@ -13,15 +13,16 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task3.R
-import com.example.task3.data.contacts.model.Contact
+import com.example.task3.data.contact_model.Contact
 import com.example.task3.databinding.FragmentMyContactsBinding
-import com.example.task3.ui.fragment.BaseFragment
-import com.example.task3.ui.fragment.addContact.AddContactDialogFragment
-import com.example.task3.ui.fragment.addContact.ConfirmationListener
-import com.example.task3.ui.fragment.myContacts.adapter.ContactActionListener
-import com.example.task3.ui.fragment.myContacts.adapter.ContactAdapter
-import com.example.task3.ui.fragment.viewpager.ViewPagerFragmentDirections
-import com.example.task3.ui.utils.Constants.TAG
+import com.example.task3.base.BaseFragment
+import com.example.task3.ui.main.myContacts.adapter.ContactActionListener
+import com.example.task3.ui.main.myContacts.adapter.ContactAdapter
+import com.example.task3.ui.main.myContacts.addContact.AddContactDialogFragment
+import com.example.task3.ui.main.myContacts.addContact.ConfirmationListener
+import com.example.task3.ui.main.viewpager.ViewPagerFragment
+import com.example.task3.ui.fragment.main.viewpager.ViewPagerFragmentDirections
+import com.example.task3.constants.Constants.TAG
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
@@ -48,7 +49,7 @@ class MyContactsFragment :
     }
 
     private fun imageViewBackListener() {
-        // todo : change to my profile tab
+        (parentFragment as ViewPagerFragment).openTab(0)
     }
 
     private fun startDialogAddContact() {

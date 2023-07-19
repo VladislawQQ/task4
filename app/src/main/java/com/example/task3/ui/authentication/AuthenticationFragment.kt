@@ -1,4 +1,4 @@
-package com.example.task3.ui.fragment.authentication
+package com.example.task3.ui.authentication
 
 import android.os.Bundle
 import android.util.Patterns
@@ -6,10 +6,11 @@ import android.view.View
 import androidx.core.widget.doAfterTextChanged
 import com.example.task3.R
 import com.example.task3.databinding.FragmentAuthBinding
-import com.example.task3.ui.fragment.BaseFragment
-import com.example.task3.ui.utils.Constants.PASSWORD_LENGTH
-import com.example.task3.ui.utils.Constants.REGEX_DIGITS
-import com.example.task3.ui.utils.Constants.REGEX_UPPER_CASE
+import com.example.task3.base.BaseFragment
+import com.example.task3.constants.Constants.PASSWORD_LENGTH
+import com.example.task3.constants.Constants.REGEX_DIGITS
+import com.example.task3.constants.Constants.REGEX_UPPER_CASE
+import com.example.task3.ui.fragment.authentication.AuthenticationFragmentDirections
 
 class AuthenticationFragment
     : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::inflate) {
@@ -44,8 +45,8 @@ class AuthenticationFragment
     private fun startNextFragment() {
         val email = binding.fragmentAuthEditTextEmail.text.toString()
 
-        val direction = AuthenticationFragmentDirections
-            .actionAuthenticationFragmentToViewPagerFragment(email)
+        val direction =
+            AuthenticationFragmentDirections.actionAuthenticationFragmentToViewPagerFragment(email)
 
         navController.navigate(direction)
     }

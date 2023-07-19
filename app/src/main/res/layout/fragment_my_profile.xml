@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.myProfile.MyProfileFragment">
+    tools:context=".ui.main.myProfile.MyProfileFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/content_start"
@@ -56,8 +56,20 @@
         android:textColor="@color/label_text_color"
         android:textSize="@dimen/fragment_my_profile_settings_text_size"
 
-        app:layout_constraintEnd_toEndOf="@id/content_end"
         app:layout_constraintStart_toStartOf="@id/content_start"
+        app:layout_constraintTop_toTopOf="@id/content_top" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fragment_my_profile_text_view_logout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:text="@string/fragment_my_profile_logout"
+        android:textAppearance="@style/open_sans_font"
+        android:textColor="@color/label_text_color"
+        android:textSize="@dimen/fragment_my_profile_settings_text_size"
+
+        app:layout_constraintEnd_toEndOf="@id/content_end"
         app:layout_constraintTop_toTopOf="@id/content_top" />
 
     <androidx.appcompat.widget.AppCompatImageView

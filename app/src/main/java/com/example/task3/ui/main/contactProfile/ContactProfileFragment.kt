@@ -1,28 +1,27 @@
-package com.example.task3.ui.fragment.contactProfile
+package com.example.task3.ui.main.contactProfile
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.example.task3.R
-import com.example.task3.data.contacts.model.Contact
+import com.example.task3.data.contact_model.Contact
 import com.example.task3.databinding.FragmentContactProfileBinding
-import com.example.task3.ui.utils.Constants.TRANSITION_NAME_CAREER
-import com.example.task3.ui.utils.Constants.TRANSITION_NAME_CONTACT_NAME
-import com.example.task3.ui.utils.Constants.TRANSITION_NAME_IMAGE
+import com.example.task3.base.BaseFragment
+import com.example.task3.constants.Constants.TRANSITION_NAME_CAREER
+import com.example.task3.constants.Constants.TRANSITION_NAME_CONTACT_NAME
+import com.example.task3.constants.Constants.TRANSITION_NAME_IMAGE
+import com.example.task3.ui.fragment.main.contactProfile.ContactProfileFragmentArgs
 import com.example.task3.ui.utils.ext.setContactPhoto
 
-class ContactProfileFragment : Fragment(R.layout.fragment_contact_profile){
+class ContactProfileFragment
+    : BaseFragment<FragmentContactProfileBinding>(FragmentContactProfileBinding::inflate){
 
-    private lateinit var binding : FragmentContactProfileBinding
     private val args : ContactProfileFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentContactProfileBinding.bind(view)
-
         val contact : Contact = args.contact
 
         attachAnimation()

@@ -54,5 +54,6 @@
     <string name="date_of_birth">Date of birth</string>
     <string name="profile">Profile</string>
     <string name="message">message</string>
+    <string name="fragment_my_profile_logout">Logout</string>
 
 </resources>

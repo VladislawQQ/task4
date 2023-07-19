@@ -1,8 +1,8 @@
-package com.example.task3.ui.fragment.myContacts
+package com.example.task3.ui.main.myContacts
 
 import androidx.lifecycle.ViewModel
 import com.example.task3.data.contacts.ContactService
-import com.example.task3.data.contacts.model.Contact
+import com.example.task3.data.contact_model.Contact
 import kotlinx.coroutines.flow.StateFlow
 
 class MyContactsViewModel : ViewModel() {

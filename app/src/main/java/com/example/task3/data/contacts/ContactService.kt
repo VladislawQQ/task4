@@ -1,6 +1,6 @@
 package com.example.task3.data.contacts
 
-import com.example.task3.data.contacts.model.Contact
+import com.example.task3.data.contact_model.Contact
 import com.example.task3.ui.utils.ext.logExt
 import kotlinx.coroutines.flow.MutableStateFlow
 

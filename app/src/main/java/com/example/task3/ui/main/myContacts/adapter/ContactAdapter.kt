@@ -1,4 +1,4 @@
-package com.example.task3.ui.fragment.myContacts.adapter
+package com.example.task3.ui.main.myContacts.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,17 +6,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task2.ui.adapter.diffUtil.ContactDiffUtil
-import com.example.task3.data.contacts.model.Contact
+import com.example.task3.data.contact_model.Contact
 import com.example.task3.databinding.ContactItemBinding
-import com.example.task3.ui.utils.Constants.TRANSITION_NAME_CAREER
-import com.example.task3.ui.utils.Constants.TRANSITION_NAME_CONTACT_NAME
-import com.example.task3.ui.utils.Constants.TRANSITION_NAME_IMAGE
+import com.example.task3.constants.Constants.TRANSITION_NAME_CAREER
+import com.example.task3.constants.Constants.TRANSITION_NAME_CONTACT_NAME
+import com.example.task3.constants.Constants.TRANSITION_NAME_IMAGE
 import com.example.task3.ui.utils.ext.setContactPhoto
 
 class ContactAdapter(
     private val contactActionListener: ContactActionListener
 )
     : ListAdapter<Contact, ContactAdapter.ContactViewHolder>(ContactDiffUtil()) {
+
+    // todo : multiselect
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)

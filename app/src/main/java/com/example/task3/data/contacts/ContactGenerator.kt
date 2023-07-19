@@ -2,7 +2,7 @@ package com.example.task3.data.contacts
 
 import android.provider.ContactsContract
 import com.example.task3.App
-import com.example.task3.data.contacts.model.Contact
+import com.example.task3.data.contact_model.Contact
 import com.github.javafaker.Faker
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.Random

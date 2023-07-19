@@ -1,4 +1,4 @@
-package com.example.task3.ui.fragment.viewpager
+package com.example.task3.ui.main.viewpager
 
 import android.os.Bundle
 import android.view.View
@@ -7,10 +7,11 @@ import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.task3.R
 import com.example.task3.databinding.FragmentViewPagerBinding
-import com.example.task3.ui.fragment.BaseFragment
-import com.example.task3.ui.fragment.myContacts.MyContactsFragment
-import com.example.task3.ui.fragment.myProfile.MyProfileFragment
-import com.example.task3.ui.utils.Constants.FRAGMENT_COUNT
+import com.example.task3.base.BaseFragment
+import com.example.task3.ui.main.myContacts.MyContactsFragment
+import com.example.task3.ui.main.myProfile.MyProfileFragment
+import com.example.task3.constants.Constants.FRAGMENT_COUNT
+import com.example.task3.ui.fragment.main.viewpager.ViewPagerFragmentArgs
 import com.google.android.material.tabs.TabLayoutMediator
 
 class ViewPagerFragment
@@ -29,11 +30,15 @@ class ViewPagerFragment
             TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                 tab.text = when(position) {
                     0 -> getString(R.string.fragment_my_profile_name)
-                    1 ->getString(R.string.fragment_my_contacts_name)
+                    1 -> getString(R.string.fragment_my_contacts_name)
                     else -> throw IllegalStateException()
                 }
             }.attach()
         }
+    }
+
+    fun openTab(index : Int) {
+        binding.viewPager.currentItem = index
     }
 
     inner class ViewPagerAdapter(fragment : Fragment) : FragmentStateAdapter(fragment) {

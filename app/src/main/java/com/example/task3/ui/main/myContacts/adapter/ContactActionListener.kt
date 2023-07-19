@@ -1,7 +1,7 @@
-package com.example.task3.ui.fragment.myContacts.adapter
+package com.example.task3.ui.main.myContacts.adapter
 
 import android.view.View
-import com.example.task3.data.contacts.model.Contact
+import com.example.task3.data.contact_model.Contact
 
 interface ContactActionListener {
     fun onContactDelete(contact: Contact)

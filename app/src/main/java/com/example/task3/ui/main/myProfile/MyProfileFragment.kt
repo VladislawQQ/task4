@@ -1,5 +1,6 @@
-package com.example.task3.ui.fragment.myProfile
+package com.example.task3.ui.main.myProfile
 
+import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -8,8 +9,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.navArgs
 import com.example.task3.databinding.FragmentMyProfileBinding
-import com.example.task3.ui.fragment.BaseFragment
-import com.example.task3.ui.utils.Constants.REGEX_EMAIL_PARSE
+import com.example.task3.base.BaseFragment
+import com.example.task3.ui.main.viewpager.ViewPagerFragment
+import com.example.task3.constants.Constants.REGEX_EMAIL_PARSE
+import com.example.task3.ui.fragment.main.myProfile.MyProfileFragmentArgs
 import com.example.task3.ui.utils.ext.setContactPhoto
 import java.util.Locale
 
@@ -50,12 +53,16 @@ class MyProfileFragment
 
     private fun setListeners() {
         binding.fragmentMyProfileButtonViewContacts.setOnClickListener { viewMyContactsButton() }
+        binding.fragmentMyProfileTextViewLogout.setOnClickListener { logout() }
+    }
+
+    private fun logout() {
+        navController.popBackStack()
     }
 
     private fun viewMyContactsButton() {
-        // todo : change to contacts list
+        (parentFragment as ViewPagerFragment).openTab(1)
     }
-
 
     private fun parseEmail(email: String): List<String> {
         return REGEX_EMAIL_PARSE.toRegex().replace(email, "").split(".")
@@ -64,14 +71,14 @@ class MyProfileFragment
 
     private fun askPermission() {
         val hasReadContactPermission =
-            ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.READ_CONTACTS)
+            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS)
 
         if (hasReadContactPermission == PackageManager.PERMISSION_GRANTED) {
             READ_CONTACTS_GRANTED = true
         } else {
             ActivityCompat.requestPermissions(
                 requireContext() as Activity,
-                arrayOf(android.Manifest.permission.READ_CONTACTS),
+                arrayOf(Manifest.permission.READ_CONTACTS),
                 1)
         }
     }

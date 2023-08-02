@@ -12,7 +12,7 @@ class MyContactsViewModel : ViewModel() {
 
     val contacts : StateFlow<List<Contact>> = contactService.contacts
 
-    private var _isMultiSelectMode = MutableStateFlow(false)
+    private val _isMultiSelectMode = MutableStateFlow(false)
 
     val isMultiSelectMode = _isMultiSelectMode
 

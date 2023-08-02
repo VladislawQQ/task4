@@ -34,7 +34,7 @@ class MyContactsFragment :
     ConfirmationListener {
 
     private val contactViewModel : MyContactsViewModel by viewModels()
-    private lateinit var adapter: ContactAdapter
+    private lateinit var contactAdapter: ContactAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,7 +61,7 @@ class MyContactsFragment :
     }
 
     private fun bindRecycleView() {
-        adapter = ContactAdapter(contactActionListener = object : ContactActionListener {
+        contactAdapter = ContactAdapter(contactActionListener = object : ContactActionListener {
             override fun onContactDelete(contact: Contact) {
                 val index = contactViewModel.getContactIndex(contact)
                 contactViewModel.deleteContact(contact)
@@ -70,7 +70,7 @@ class MyContactsFragment :
 
             override fun onContactClick(contact: Contact, transitionNames: Array<Pair<View, String>>) {
                 with(contactViewModel) {
-                    if (adapter.isMultiSelectMode) {
+                    if (contactAdapter.isMultiSelectMode) {
                         toggle(contact)
 
                         if (sizeOfSelectedItems() == 0) {
@@ -93,7 +93,7 @@ class MyContactsFragment :
                     clearSelectedItems()
 
                     logExt(isMultiSelectMode.value.toString())
-                    logExt(adapter.isMultiSelectMode.toString())
+                    logExt(contactAdapter.isMultiSelectMode.toString())
                     if (isMultiSelectMode.value) {
                         toggle(contact)
                     } else {
@@ -104,9 +104,9 @@ class MyContactsFragment :
         })
 
         val recyclerLayoutManager = LinearLayoutManager(activity)
-        with(binding){
-            fragmentMyContactRecyclerViewContacts.layoutManager = recyclerLayoutManager
-            fragmentMyContactRecyclerViewContacts.adapter = adapter
+        with(binding.fragmentMyContactRecyclerViewContacts){
+            layoutManager = recyclerLayoutManager
+            adapter = contactAdapter
         }
     }
     private fun observeViewModel() {
@@ -115,14 +115,15 @@ class MyContactsFragment :
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     contactViewModel.contacts.collect {
-                        adapter.submitList(it)
+                        contactAdapter.submitList(it)
                         startPostponedEnterTransition()
                     }
                 }
 
                 launch {
                     contactViewModel.isMultiSelectMode.collect {
-                        adapter.isMultiSelectMode = it
+                        binding.fragmentMyContactRecyclerViewContacts.adapter = contactAdapter
+                        contactAdapter.isMultiSelectMode = it
                         binding.fragmentMyContactTextViewAddContact.visibility = if (it) GONE else VISIBLE
                     }
                 }

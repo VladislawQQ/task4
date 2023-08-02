@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@color/view_color"
         app:tabTextColor="@color/label_text_color"
+        app:tabIndicatorColor="@color/label_text_color"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -17,7 +17,7 @@
 
     // contact item
     <color name="contact_item_name_color">#FF000000</color>
-    <color name="contact_item_career_color">#B2B2B3</color>
+    <color name="contact_item_career_color">#828282</color>
 
     // text input layout
     <color name="text_input_edit_text_text_color">#FAFAFA</color>

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/authenticationFragment"
-        android:name="com.example.task3.ui.authentication.AuthenticationFragment"
+        android:name="com.example.task4.ui.authentication.AuthenticationFragment"
         android:label="fragment_auth"
         tools:layout="@layout/fragment_auth" >
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/viewPagerFragment"
-        android:name="com.example.task3.ui.main.viewpager.ViewPagerFragment"
+        android:name="com.example.task4.ui.main.viewpager.ViewPagerFragment"
         android:label="fragment_view_pager"
         tools:layout="@layout/fragment_view_pager">
         <action
@@ -36,17 +36,17 @@
     </fragment>
     <fragment
         android:id="@+id/contactProfileFragment"
-        android:name="com.example.task3.ui.main.contactProfile.ContactProfileFragment"
+        android:name="com.example.task4.ui.main.contactProfile.ContactProfileFragment"
         android:label="fragment_contact_profile"
         tools:layout="@layout/fragment_contact_profile" >
         <argument
             android:name="contact"
-            app:argType="com.example.task3.data.contacts.model.Contact" />
+            app:argType="com.example.task4.data.models.Contact" />
     </fragment>
 
     <fragment
         android:id="@+id/myProfileFragment"
-        android:name="com.example.task3.ui.main.myProfile.MyProfileFragment"
+        android:name="com.example.task4.ui.main.myProfile.MyProfileFragment"
         android:label="fragment_my_profile"
         tools:layout="@layout/fragment_my_profile">
         <argument

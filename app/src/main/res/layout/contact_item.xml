@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_item_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/border_contact_item"
     android:orientation="horizontal"
     android:layout_marginBottom="@dimen/margin_small"
     android:padding="@dimen/padding_small">
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/contact_item_checkbox_select_mode"
+        android:layout_width="@dimen/contact_item_size_checkbox"
+        android:layout_height="@dimen/contact_item_size_checkbox"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/margin_small"
+        android:button="@drawable/checkbox_user_item"
+        android:checked="false"
+        android:enabled="false"
+        android:visibility="gone"/>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/contact_item_image_view_profile_photo"

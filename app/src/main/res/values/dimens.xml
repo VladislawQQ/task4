@@ -38,6 +38,7 @@
 
     <!-- contact item -->
 
+    <dimen name="contact_item_size_checkbox">20dp</dimen>
     <dimen name="contact_item_size_profile_photo">50dp</dimen>
     <dimen name="contact_item_size_icon_delete">35dp</dimen>
     <dimen name="contact_item_text_size_name">18sp</dimen>

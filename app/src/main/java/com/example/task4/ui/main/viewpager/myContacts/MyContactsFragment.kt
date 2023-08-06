@@ -69,9 +69,9 @@ class MyContactsFragment :
             override fun onContactClick(contact: ContactListItem, transitionNames: Array<Pair<View, String>>) {
                     if (contactAdapter.isMultiSelectMode) {
                         contactViewModel.toggle(contact)
-                        if (contactViewModel.stateFlow.value!!.totalCheckedCount == 0) {
-                            binding.fragmentMyContactRecyclerViewContacts.adapter = contactAdapter
-                        }
+//                        if (contactViewModel.stateFlow.value!!.totalCheckedCount == 0) {
+//                            binding.fragmentMyContactRecyclerViewContacts.adapter = contactAdapter
+//                        }
                     } else {
                         val extras = FragmentNavigatorExtras(*transitionNames)
 
@@ -89,7 +89,7 @@ class MyContactsFragment :
                     } else {
                         toggle(contact)
                     }
-                    binding.fragmentMyContactRecyclerViewContacts.adapter = contactAdapter
+//                    binding.fragmentMyContactRecyclerViewContacts.adapter = contactAdapter
                 }
             }
         })

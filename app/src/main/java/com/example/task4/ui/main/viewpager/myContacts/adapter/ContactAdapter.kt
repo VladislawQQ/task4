@@ -70,9 +70,7 @@ class ContactAdapter(
             }
 
             binding.contactItemImageViewBucket.setOnClickListener {
-                contactActionListener.onContactDelete(
-                    contact
-                )
+                contactActionListener.onContactDelete(contact)
             }
         }
 

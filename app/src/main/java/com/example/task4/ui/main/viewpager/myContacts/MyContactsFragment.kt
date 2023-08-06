@@ -23,7 +23,6 @@ import com.example.task4.ui.main.viewpager.myContacts.adapter.ContactActionListe
 import com.example.task4.ui.main.viewpager.myContacts.adapter.ContactAdapter
 import com.example.task4.ui.main.viewpager.myContacts.addContact.AddContactDialogFragment
 import com.example.task4.ui.main.viewpager.myContacts.addContact.ConfirmationListener
-import com.example.task4.ui.utils.ext.logExt
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
@@ -70,7 +69,9 @@ class MyContactsFragment :
             override fun onContactClick(contact: ContactListItem, transitionNames: Array<Pair<View, String>>) {
                     if (contactAdapter.isMultiSelectMode) {
                         contactViewModel.toggle(contact)
-                        logExt("Click")
+                        if (contactViewModel.stateFlow.value!!.totalCheckedCount == 0) {
+                            binding.fragmentMyContactRecyclerViewContacts.adapter = contactAdapter
+                        }
                     } else {
                         val extras = FragmentNavigatorExtras(*transitionNames)
 
@@ -88,11 +89,13 @@ class MyContactsFragment :
                     } else {
                         toggle(contact)
                     }
+                    binding.fragmentMyContactRecyclerViewContacts.adapter = contactAdapter
                 }
             }
         })
 
         val recyclerLayoutManager = LinearLayoutManager(activity)
+
         with(binding.fragmentMyContactRecyclerViewContacts){
             layoutManager = recyclerLayoutManager
             adapter = contactAdapter

@@ -12,7 +12,7 @@ class ContactGenerator {
 
     fun generateContacts(): MutableStateFlow<List<Contact>> {
         return MutableStateFlow(
-            List(15) { randomContact() }
+            List(1000) { randomContact() }
             )
     }
 

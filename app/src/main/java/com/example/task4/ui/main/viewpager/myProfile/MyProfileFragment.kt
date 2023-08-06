@@ -1,4 +1,4 @@
-package com.example.task4.ui.main.myProfile
+package com.example.task4.ui.main.viewpager.myProfile
 
 import android.Manifest
 import android.app.Activity

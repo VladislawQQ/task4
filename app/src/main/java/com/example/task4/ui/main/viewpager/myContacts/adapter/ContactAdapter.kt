@@ -1,0 +1,108 @@
+package com.example.task4.ui.main.viewpager.myContacts.adapter
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.example.task4.R
+import com.example.task4.constants.Constants.TRANSITION_NAME_CAREER
+import com.example.task4.constants.Constants.TRANSITION_NAME_CONTACT_NAME
+import com.example.task4.constants.Constants.TRANSITION_NAME_IMAGE
+import com.example.task4.databinding.ContactItemBinding
+import com.example.task4.ui.main.viewpager.myContacts.ContactListItem
+import com.example.task4.ui.main.viewpager.myContacts.adapter.diffUtil.ContactDiffUtil
+import com.example.task4.ui.utils.ext.setContactPhoto
+
+class ContactAdapter(
+    private val contactActionListener: ContactActionListener
+) : ListAdapter<ContactListItem, ContactAdapter.ContactViewHolder>(ContactDiffUtil()) {
+
+    var isMultiSelectMode = false
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
+        val inflater: LayoutInflater = LayoutInflater.from(parent.context)
+        val binding = ContactItemBinding.inflate(inflater, parent, false)
+        return ContactViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
+        holder.bind(currentList[position])
+    }
+
+    inner class ContactViewHolder(
+        private val binding: ContactItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(contact: ContactListItem) {
+            with(binding) {
+                contactItemTextViewName.text = contact.name
+                contactItemTextViewCareer.text = contact.career.replaceFirstChar { it.titlecase() }
+
+                with(contactItemImageViewProfilePhoto) {
+                    if (contact.photo.isNotBlank())
+                        setContactPhoto(contact.photo)
+                    else setContactPhoto()
+                }
+
+                contactItemCheckboxSelectMode.visibility = if (isMultiSelectMode) VISIBLE else GONE
+                contactItemCheckboxSelectMode.isChecked = contact.isChecked
+                contactItemImageViewBucket.visibility = if (isMultiSelectMode) GONE else VISIBLE
+                llItemView.background = if (isMultiSelectMode)
+                    ContextCompat.getDrawable(
+                        root.context,
+                        R.drawable.border_contact_item_multiselect
+                    )
+                else
+                    ContextCompat.getDrawable(root.context, R.drawable.border_contact_item)
+
+            }
+            setListeners(contact)
+        }
+
+        private fun setListeners(contact: ContactListItem) {
+            itemView.setOnClickListener { onItemClick(contact) }
+
+            itemView.setOnLongClickListener {
+                contactActionListener.onContactLongClick(contact)
+                true
+            }
+
+            binding.contactItemImageViewBucket.setOnClickListener {
+                contactActionListener.onContactDelete(
+                    contact
+                )
+            }
+        }
+
+        private fun onItemClick(contact: ContactListItem) {
+            with(binding) {
+                contactActionListener.onContactClick(
+                    contact,
+                    arrayOf(
+                        setTransitionName(
+                            contactItemImageViewProfilePhoto,
+                            TRANSITION_NAME_IMAGE
+                        ),
+                        setTransitionName(
+                            contactItemTextViewName,
+                            TRANSITION_NAME_CONTACT_NAME
+                        ),
+                        setTransitionName(contactItemTextViewCareer, TRANSITION_NAME_CAREER)
+                    )
+                )
+
+                if (isMultiSelectMode) {
+                    contactItemCheckboxSelectMode.isChecked =
+                        contact.isChecked
+                }
+            }
+        }
+
+        private fun setTransitionName(view: View, transitionName: String): Pair<View, String> {
+            view.transitionName = transitionName
+            return view to transitionName
+        }
+    }
+}

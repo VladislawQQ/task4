@@ -1,4 +1,4 @@
-package com.example.task4.ui.main.myContacts.addContact
+package com.example.task4.ui.main.viewpager.myContacts.addContact
 
 import android.app.Dialog
 import android.os.Bundle

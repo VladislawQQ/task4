@@ -46,7 +46,7 @@
 
     <fragment
         android:id="@+id/myProfileFragment"
-        android:name="com.example.task4.ui.main.myProfile.MyProfileFragment"
+        android:name="com.example.task4.ui.main.viewpager.myProfile.MyProfileFragment"
         android:label="fragment_my_profile"
         tools:layout="@layout/fragment_my_profile">
         <argument

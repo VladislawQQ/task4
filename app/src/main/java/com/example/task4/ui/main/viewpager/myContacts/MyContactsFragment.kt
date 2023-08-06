@@ -1,9 +1,7 @@
-package com.example.task4.ui.main.myContacts
+package com.example.task4.ui.main.viewpager.myContacts
 
 import android.os.Bundle
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -19,12 +17,12 @@ import com.example.task4.base.BaseFragment
 import com.example.task4.constants.Constants.TAG
 import com.example.task4.data.models.Contact
 import com.example.task4.databinding.FragmentMyContactsBinding
-import com.example.task4.ui.main.myContacts.adapter.ContactActionListener
-import com.example.task4.ui.main.myContacts.adapter.ContactAdapter
-import com.example.task4.ui.main.myContacts.addContact.AddContactDialogFragment
-import com.example.task4.ui.main.myContacts.addContact.ConfirmationListener
 import com.example.task4.ui.main.viewpager.ViewPagerFragment
 import com.example.task4.ui.main.viewpager.ViewPagerFragmentDirections
+import com.example.task4.ui.main.viewpager.myContacts.adapter.ContactActionListener
+import com.example.task4.ui.main.viewpager.myContacts.adapter.ContactAdapter
+import com.example.task4.ui.main.viewpager.myContacts.addContact.AddContactDialogFragment
+import com.example.task4.ui.main.viewpager.myContacts.addContact.ConfirmationListener
 import com.example.task4.ui.utils.ext.logExt
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
@@ -48,7 +46,7 @@ class MyContactsFragment :
     private fun setListeners() {
         binding.fragmentMyContactTextViewAddContact.setOnClickListener { startDialogAddContact() }
         binding.fragmentMyContactsImageViewBack.setOnClickListener { imageViewBackListener() }
-        binding.fragmentMyContactImageViewSearch.setOnClickListener {  } // TODO: search in contacts 
+        binding.fragmentMyContactImageViewSearch.setOnClickListener {  } // TODO: search in contacts
     }
 
     private fun imageViewBackListener() {
@@ -62,42 +60,33 @@ class MyContactsFragment :
 
     private fun bindRecycleView() {
         contactAdapter = ContactAdapter(contactActionListener = object : ContactActionListener {
-            override fun onContactDelete(contact: Contact) {
-                val index = contactViewModel.getContactIndex(contact)
-                contactViewModel.deleteContact(contact)
-                showDeleteMessage(index, contact)
+
+            override fun onContactDelete(contact: ContactListItem) {
+                val index = contactViewModel.getContactIndex(contact.contact)
+                contactViewModel.deleteContact(contact.contact)
+                showDeleteMessage(index, contact.contact)
             }
 
-            override fun onContactClick(contact: Contact, transitionNames: Array<Pair<View, String>>) {
-                with(contactViewModel) {
+            override fun onContactClick(contact: ContactListItem, transitionNames: Array<Pair<View, String>>) {
                     if (contactAdapter.isMultiSelectMode) {
-                        toggle(contact)
-
-                        if (sizeOfSelectedItems() == 0) {
-                            changeMultiSelectMode()
-                        }
+                        contactViewModel.toggle(contact)
+                        logExt("Click")
                     } else {
                         val extras = FragmentNavigatorExtras(*transitionNames)
 
                         val direction: NavDirections = ViewPagerFragmentDirections
-                            .actionViewPagerFragmentToContactProfileFragment(contact)
+                            .actionViewPagerFragmentToContactProfileFragment(contact.contact)
 
                         navController.navigate(direction, extras)
                     }
-                }
             }
 
-            override fun onContactLongClick(contact: Contact) {
+            override fun onContactLongClick(contact: ContactListItem) {
                 with(contactViewModel) {
-                    changeMultiSelectMode()
-                    clearSelectedItems()
-
-                    logExt(isMultiSelectMode.value.toString())
-                    logExt(contactAdapter.isMultiSelectMode.toString())
-                    if (isMultiSelectMode.value) {
-                        toggle(contact)
-                    } else {
+                    if (contactAdapter.isMultiSelectMode) {
                         clearSelectedItems()
+                    } else {
+                        toggle(contact)
                     }
                 }
             }
@@ -113,18 +102,11 @@ class MyContactsFragment :
         postponeEnterTransition()
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    contactViewModel.contacts.collect {
-                        contactAdapter.submitList(it)
+                contactViewModel.stateFlow.collect {  state ->
+                    if (state != null) {
+                        contactAdapter.submitList(state.contacts)
+                        contactAdapter.isMultiSelectMode = state.totalCheckedCount > 0
                         startPostponedEnterTransition()
-                    }
-                }
-
-                launch {
-                    contactViewModel.isMultiSelectMode.collect {
-                        binding.fragmentMyContactRecyclerViewContacts.adapter = contactAdapter
-                        contactAdapter.isMultiSelectMode = it
-                        binding.fragmentMyContactTextViewAddContact.visibility = if (it) GONE else VISIBLE
                     }
                 }
             }

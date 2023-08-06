@@ -1,4 +1,4 @@
-package com.example.task4.ui.main.myContacts.addContact
+package com.example.task4.ui.main.viewpager.myContacts.addContact
 
 import com.example.task4.data.models.Contact
 

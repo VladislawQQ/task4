@@ -30,7 +30,7 @@ class MyContactsFragment :
     BaseFragment<FragmentMyContactsBinding>(FragmentMyContactsBinding::inflate),
     ConfirmationListener {
 
-    private val contactViewModel : MyContactsViewModel by viewModels()
+    private val contactViewModel: MyContactsViewModel by viewModels()
     private lateinit var contactAdapter: ContactAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,7 +45,7 @@ class MyContactsFragment :
     private fun setListeners() {
         binding.fragmentMyContactTextViewAddContact.setOnClickListener { startDialogAddContact() }
         binding.fragmentMyContactsImageViewBack.setOnClickListener { imageViewBackListener() }
-        binding.fragmentMyContactImageViewSearch.setOnClickListener {  } // TODO: search in contacts
+        binding.fragmentMyContactImageViewSearch.setOnClickListener { } // TODO: search in contacts
     }
 
     private fun imageViewBackListener() {
@@ -66,20 +66,26 @@ class MyContactsFragment :
                 showDeleteMessage(index, contact.contact)
             }
 
-            override fun onContactClick(contact: ContactListItem, transitionNames: Array<Pair<View, String>>) {
-                    if (contactAdapter.isMultiSelectMode) {
-                        contactViewModel.toggle(contact)
-//                        if (contactViewModel.stateFlow.value!!.totalCheckedCount == 0) {
-//                            binding.fragmentMyContactRecyclerViewContacts.adapter = contactAdapter
-//                        }
-                    } else {
-                        val extras = FragmentNavigatorExtras(*transitionNames)
+            override fun onContactClick(
+                contact: ContactListItem,
+                transitionNames: Array<Pair<View, String>>
+            ) {
+                if (contactAdapter.isMultiSelectMode) {
+                    with(contactViewModel) {
+                        toggle(contact)
 
-                        val direction: NavDirections = ViewPagerFragmentDirections
-                            .actionViewPagerFragmentToContactProfileFragment(contact.contact)
-
-                        navController.navigate(direction, extras)
+                        if (!contactAdapter.isMultiSelectMode) {
+                            binding.fragmentMyContactRecyclerViewContacts.adapter = contactAdapter
+                        }
                     }
+                } else {
+                    val extras = FragmentNavigatorExtras(*transitionNames)
+
+                    val direction: NavDirections = ViewPagerFragmentDirections
+                        .actionViewPagerFragmentToContactProfileFragment(contact.contact)
+
+                    navController.navigate(direction, extras)
+                }
             }
 
             override fun onContactLongClick(contact: ContactListItem) {
@@ -89,26 +95,27 @@ class MyContactsFragment :
                     } else {
                         toggle(contact)
                     }
-//                    binding.fragmentMyContactRecyclerViewContacts.adapter = contactAdapter
+                    binding.fragmentMyContactRecyclerViewContacts.adapter = contactAdapter
                 }
             }
         })
 
         val recyclerLayoutManager = LinearLayoutManager(activity)
 
-        with(binding.fragmentMyContactRecyclerViewContacts){
+        with(binding.fragmentMyContactRecyclerViewContacts) {
             layoutManager = recyclerLayoutManager
             adapter = contactAdapter
         }
     }
+
     private fun observeViewModel() {
         postponeEnterTransition()
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                contactViewModel.stateFlow.collect {  state ->
+                contactViewModel.stateFlow.collect { state ->
                     if (state != null) {
+                        contactAdapter.isMultiSelectMode = state.isMultiSelect
                         contactAdapter.submitList(state.contacts)
-                        contactAdapter.isMultiSelectMode = state.totalCheckedCount > 0
                         startPostponedEnterTransition()
                     }
                 }
@@ -117,8 +124,10 @@ class MyContactsFragment :
     }
 
     private fun addSwipeToDelete() {
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0,
-            ItemTouchHelper.END or ItemTouchHelper.START) {
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.END or ItemTouchHelper.START
+        ) {
 
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -140,15 +149,30 @@ class MyContactsFragment :
         Snackbar.make(binding.root, R.string.message_delete, Snackbar.LENGTH_LONG)
             .setAction(getString(R.string.snackbar_action).uppercase()) {
                 contactViewModel.addContact(index, contact)
-            }.setActionTextColor(ContextCompat.getColor(requireContext(), R.color.contacts_activity_class_snackbar_action_color))
-            .setTextColor(ContextCompat.getColor(requireContext(), R.color.contacts_activity_class_snackbar_text_color))
+            }.setActionTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.contacts_activity_class_snackbar_action_color
+                )
+            )
+            .setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.contacts_activity_class_snackbar_text_color
+                )
+            )
             .show()
     }
 
     override fun onConfirmButtonClicked(contact: Contact) {
         contactViewModel.addContact(contact)
         Snackbar.make(binding.root, R.string.message_add_contact, Snackbar.LENGTH_SHORT)
-            .setTextColor(ContextCompat.getColor(requireContext(), R.color.contacts_activity_class_snackbar_text_color))
+            .setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.contacts_activity_class_snackbar_text_color
+                )
+            )
             .show()
     }
 }

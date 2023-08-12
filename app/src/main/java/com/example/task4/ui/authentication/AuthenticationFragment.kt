@@ -44,8 +44,7 @@ class AuthenticationFragment
     private fun startNextFragment() {
         val email = binding.fragmentAuthEditTextEmail.text.toString()
 
-        val direction =
-            AuthenticationFragmentDirections.actionAuthenticationFragmentToViewPagerFragment(email)
+        val direction = AuthenticationFragmentDirections.startMainActivity(email)
 
         navController.navigate(direction)
     }

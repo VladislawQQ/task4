@@ -61,11 +61,11 @@ class MyContactsViewModel : ViewModel() {
             contacts = contacts.map { contact ->
                 ContactListItem(contact, multiChoiceState.isChecked(contact))
             },
-            totalCheckedCount = multiChoiceState.totalCheckedCount
+            isMultiSelect = multiChoiceState.totalCheckedCount > 0
         )
     }
     class State(
-        val totalCheckedCount: Int,
-        val contacts: List<ContactListItem>
+        val contacts: List<ContactListItem>,
+        val isMultiSelect: Boolean
     )
 }

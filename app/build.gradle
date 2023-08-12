@@ -1,8 +1,8 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    id 'androidx.navigation.safeargs.kotlin'
-    id 'kotlin-parcelize'
+    id 'com.android.application'                // core
+    id 'org.jetbrains.kotlin.android'           // core
+    id 'androidx.navigation.safeargs.kotlin'    // safe args for navigation
+    id 'kotlin-parcelize'                       // parcelize
 }
 
 android {
@@ -30,7 +30,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
     buildFeatures {
@@ -40,7 +40,7 @@ android {
 
 dependencies {
     // Core
-    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation "androidx.core:core-ktx:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -57,9 +57,10 @@ dependencies {
     implementation 'com.github.javafaker:javafaker:1.0.2'
 
     // View model
-    implementation "androidx.fragment:fragment-ktx:1.6.0"
+    implementation "androidx.fragment:fragment-ktx:1.6.1"
+    implementation "androidx.activity:activity-ktx:1.7.2"
 
     // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:2.6.0"
-    implementation "androidx.navigation:navigation-ui-ktx:2.6.0"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 }

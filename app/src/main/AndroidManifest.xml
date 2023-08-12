@@ -17,14 +17,18 @@
         android:theme="@style/Theme.Task4"
         tools:targetApi="33">
         <activity
-            android:name="com.example.task4.ui.activity.MainActivity"
+            android:name=".ui.authentication.AuthActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

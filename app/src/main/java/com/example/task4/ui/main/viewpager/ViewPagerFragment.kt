@@ -40,13 +40,13 @@ class ViewPagerFragment
         binding.viewPager.currentItem = index
     }
 
-    inner class ViewPagerAdapter(fragment : Fragment) : FragmentStateAdapter(fragment) {
+    inner class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
         override fun createFragment(position: Int): Fragment {
             return when(position) {
                 0 -> {
                     val myProfileFragment = MyProfileFragment()
                     myProfileFragment.arguments = args.toBundle()
-                        myProfileFragment
+                    myProfileFragment
                 }
                 1 -> MyContactsFragment()
                 else -> throw IllegalStateException()

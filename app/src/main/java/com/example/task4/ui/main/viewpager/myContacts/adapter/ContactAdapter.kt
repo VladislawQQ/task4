@@ -45,25 +45,14 @@ class ContactAdapter(
                         setContactPhoto(contact.photo)
                     else setContactPhoto()
                 }
-
-//                contactItemCheckboxSelectMode.visibility = if (isMultiSelectMode) VISIBLE else GONE
-//                contactItemCheckboxSelectMode.isChecked = contact.isChecked
-//                contactItemImageViewBucket.visibility = if (isMultiSelectMode) GONE else VISIBLE
-//                llItemView.background = if (isMultiSelectMode)
-//                    ContextCompat.getDrawable(
-//                        root.context,
-//                        R.drawable.border_contact_item_multiselect
-//                    )
-//                else
-//                    ContextCompat.getDrawable(root.context, R.drawable.border_contact_item)
-
             }
             setListeners(contact)
         }
 
         private fun setListeners(contact: ContactListItem) {
-            if (isMultiSelectMode)
+            if (isMultiSelectMode) {
                 setSelectList(contact)
+            }
             else
                 binding.contactItemImageViewBucket.setOnClickListener {
                     contactActionListener.onContactDelete(contact)

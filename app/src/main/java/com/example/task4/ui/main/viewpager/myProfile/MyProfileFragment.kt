@@ -23,8 +23,6 @@ class MyProfileFragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val args = savedInstanceState?.let { MyProfileFragmentArgs.fromBundle(it) }
-
         askPermission()
         setListeners()
         roundProfilePhoto()
@@ -58,7 +56,7 @@ class MyProfileFragment
     }
 
     private fun logout() {
-        navController.popBackStack()
+        navController.popBackStack() // todo : fix (change to start auth activity)
     }
 
     private fun viewMyContactsButton() {

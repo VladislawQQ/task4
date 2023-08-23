@@ -31,9 +31,9 @@
 
     <!-- Validation email and password -->
     <string name="dont_use_spaces">Don\'t use spaces</string>
-    <string name="min_8_chars_pass">Minimum 8 character password</string>
+    <string name="min_length_password">Minimum %d character password</string>
     <string name="contain_upper_case_chars">Must contain upper-case characters</string>
-    <string name="contain_number_chars">Must contain number characters</string>
+    <string name="contain_digit_chars">Must contain number characters</string>
     <string name="invalid_email_address">Invalid Email Address</string>
 
     <!-- Snackbar message -->

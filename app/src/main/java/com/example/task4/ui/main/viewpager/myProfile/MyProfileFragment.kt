@@ -9,7 +9,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.navArgs
 import com.example.task4.base.BaseFragment
-import com.example.task4.constants.Constants.REGEX_EMAIL_PARSE
+import com.example.task4.constants.Validation.REGEX_EMAIL_PARSE
 import com.example.task4.databinding.FragmentMyProfileBinding
 import com.example.task4.ui.main.viewpager.ViewPagerFragment
 import com.example.task4.ui.utils.ext.setContactPhoto

@@ -4,7 +4,9 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import com.example.task4.constants.Constants.DEFAULT_NAME
 import com.example.task4.data.contacts.ContactGenerator
+import com.example.task4.data.models.Contact
 import com.example.task4.databinding.DialogAddContactBinding
 import com.example.task4.ui.utils.ext.setContactPhoto
 
@@ -12,7 +14,6 @@ class AddContactDialogFragment : DialogFragment() {
 
     private lateinit var listener: ConfirmationListener
     private lateinit var _binding: DialogAddContactBinding
-    private val _contactGenerator = ContactGenerator()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = DialogAddContactBinding.inflate(layoutInflater)
@@ -36,13 +37,17 @@ class AddContactDialogFragment : DialogFragment() {
         }
     }
 
-
     private fun saveButtonListener() {
         listener.onConfirmButtonClicked(
             with(_binding) {
-                _contactGenerator.createContact(
-                    userName = dialogAddContactEditTextUsername.text.toString(),
-                    career = dialogAddContactEditTextCareer.text.toString()
+                Contact (
+                    name = dialogAddContactEditTextUsername.text.toString().ifBlank { DEFAULT_NAME },
+                    career = dialogAddContactEditTextCareer.text.toString(),
+                    photo = "",
+                    email = "",
+                    phone = "",
+                    address = "",
+                    dateOfBirthday = ""
                 )
             }
         )
@@ -51,5 +56,9 @@ class AddContactDialogFragment : DialogFragment() {
 
     private fun imageViewBackListener() {
         dismiss()
+    }
+
+    companion object {
+        const val TAG_ADD_CONTACT = "Add contact dialog"
     }
 }

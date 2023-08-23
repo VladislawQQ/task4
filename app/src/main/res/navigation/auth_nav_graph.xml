@@ -8,7 +8,7 @@
 
   <fragment
       android:id="@+id/authenticationFragment"
-      android:name="com.example.task4.ui.authentication.AuthenticationFragment"
+      android:name="com.example.task4.ui.authentication.AuthFragment"
       android:label="fragment_auth"
       tools:layout="@layout/fragment_auth" >
       <action

@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task4.R
 import com.example.task4.base.BaseFragment
-import com.example.task4.constants.Constants.TAG
 import com.example.task4.data.models.Contact
 import com.example.task4.databinding.FragmentMyContactsBinding
 import com.example.task4.ui.main.viewpager.ViewPagerFragment
@@ -22,6 +21,7 @@ import com.example.task4.ui.main.viewpager.ViewPagerFragmentDirections
 import com.example.task4.ui.main.viewpager.myContacts.adapter.ContactActionListener
 import com.example.task4.ui.main.viewpager.myContacts.adapter.ContactAdapter
 import com.example.task4.ui.main.viewpager.myContacts.addContact.AddContactDialogFragment
+import com.example.task4.ui.main.viewpager.myContacts.addContact.AddContactDialogFragment.Companion.TAG_ADD_CONTACT
 import com.example.task4.ui.main.viewpager.myContacts.addContact.ConfirmationListener
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
@@ -54,7 +54,7 @@ class MyContactsFragment :
 
     private fun startDialogAddContact() {
         val addContactDialogFragment = AddContactDialogFragment()
-        addContactDialogFragment.show(childFragmentManager, TAG)
+        addContactDialogFragment.show(childFragmentManager, TAG_ADD_CONTACT)
     }
 
     private fun bindRecycleView() {

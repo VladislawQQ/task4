@@ -2,6 +2,7 @@ package com.example.task4.data.contacts
 
 import android.provider.ContactsContract
 import com.example.task4.App
+import com.example.task4.constants.Constants.COUNT_OF_CONTACTS
 import com.example.task4.data.models.Contact
 import com.github.javafaker.Faker
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,26 +13,20 @@ class ContactGenerator {
 
     fun generateContacts(): MutableStateFlow<List<Contact>> {
         return MutableStateFlow(
-            List(15) { randomContact() }
+            List(COUNT_OF_CONTACTS) { randomContact() }
             )
-    }
-
-    fun createContact(
-        userName: String,
-        career: String
-    ): Contact {
-        return Contact(
-            name = userName.ifBlank { faker.name().fullName() },
-            career = career,
-            photo = ""
-        )
     }
 
     private fun randomContact(): Contact {
         return Contact(
             name = faker.name().fullName(),
             career = faker.job().position(),
-            photo = IMAGES[Random().nextInt(IMAGES.size - 1)]
+            photo = IMAGES[Random().nextInt(IMAGES.size - 1)],
+            email = "",
+            phone = "",
+            address = "",
+            dateOfBirthday = ""
+
         )
     }
 
@@ -55,7 +50,14 @@ class ContactGenerator {
 
                 while (cursor.moveToNext()) {
                     val name = cursor.use { ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME }
-                    val contact = Contact(photo = "", name = name, career = "")
+                    val contact = Contact(
+                        photo = "",
+                        name = name,
+                        career = "",
+                        email = "",
+                        phone = "",
+                        address = "",
+                        dateOfBirthday = "")
 
                     contactList.add(contact)
                 }

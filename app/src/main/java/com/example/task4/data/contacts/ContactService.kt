@@ -4,18 +4,23 @@ import com.example.task4.data.models.Contact
 import com.example.task4.ui.main.viewpager.myContacts.multiselect.ContactMultiSelectHandler
 import com.example.task4.ui.utils.ext.logExt
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class ContactService : ContactMultiSelectHandler() {
 
-    var contacts = MutableStateFlow<List<Contact>>(emptyList())
+    private val _contacts = MutableStateFlow<List<Contact>>(emptyList())
+    val contacts = _contacts.asStateFlow()
+
     private val contactProvider = ContactGenerator()
+    private var lastDeleteContact: Contact? = null
+    private var lastDeleteIndex: Int? = null
 
     init {
         setContacts()
     }
 
     private fun setContacts() {
-        if (contacts.value.isEmpty()) {
+        if (_contacts.value.isEmpty()) {
             val contactsPhone = MutableStateFlow<List<Contact>>(emptyList())
             try {
                 contactsPhone.value = contactProvider.getPhoneContacts()
@@ -23,39 +28,37 @@ class ContactService : ContactMultiSelectHandler() {
                 logExt("Catch! ${e.message}")
             }
 
-            contacts =
-                if (contactsPhone.value.isNotEmpty()) contactsPhone
+            _contacts.value =
+                if (contactsPhone.value.isNotEmpty())
+                    contactsPhone.value
                 else
-                    contactProvider.generateContacts()
+                    contactProvider.generateContacts().value
         }
     }
 
-    fun deleteContact(contact: Contact): Int {
-        val indexToDelete: Int
+    fun deleteContact(index: Int) {
+        if(index == -1) return
 
-        contacts.value = contacts.value.toMutableList().apply {
-            indexToDelete = indexOf(contact)
-            remove(contact)
+        lastDeleteIndex = index
+        lastDeleteContact = _contacts.value[index]
+
+        _contacts.value = _contacts.value.toMutableList().apply {
+            remove(lastDeleteContact)
         }
-
-        return indexToDelete
+    }
+    fun restoreContact() {
+        _contacts.value = _contacts.value.toMutableList().apply {
+            if(lastDeleteIndex != null && lastDeleteContact != null) {
+                add(lastDeleteIndex!!, lastDeleteContact!!)
+                lastDeleteIndex = null
+                lastDeleteContact = null
+            }
+        }
     }
 
     fun addContact(contact: Contact) {
-        contacts.value = contacts.value.toMutableList().apply {
+        _contacts.value = _contacts.value.toMutableList().apply {
             add(contact)
         }
-    }
-
-    fun addContact(index: Int, contact: Contact) {
-        contacts.value = contacts.value.toMutableList().apply {
-            add(index, contact)
-        }
-    }
-
-    fun getContactIndex(contact: Contact): Int = contacts.value.indexOf(contact)
-
-    fun getContactByIndex(index: Int): Contact {
-        return contacts.value[index]
     }
 }

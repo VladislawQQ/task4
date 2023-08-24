@@ -34,15 +34,10 @@ class MyContactsViewModel : ViewModel() {
         }
     }
 
-    fun getContact(index: Int): Contact = contactService.getContactByIndex(index)
+    fun deleteContact(index: Int) = contactService.deleteContact(index)
+    fun deleteContact(contact: Contact) = contactService.deleteContact(contactService.contacts.value.indexOf(contact))
+    fun restoreContact() = contactService.restoreContact()
 
-    fun getContactIndex(contact: Contact) : Int = contactService.getContactIndex(contact)
-
-    fun deleteContact(contact: Contact): Int = contactService.deleteContact(contact)
-
-    fun addContact(index: Int, contact: Contact) {
-        contactService.addContact(index, contact)
-    }
     fun addContact(contact: Contact) {
         contactService.addContact(contact)
     }

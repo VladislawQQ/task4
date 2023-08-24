@@ -9,9 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.task4.R
 import com.example.task4.base.BaseFragment
 import com.example.task4.data.models.Contact
@@ -23,6 +21,7 @@ import com.example.task4.ui.main.viewpager.myContacts.adapter.ContactAdapter
 import com.example.task4.ui.main.viewpager.myContacts.addContact.AddContactDialogFragment
 import com.example.task4.ui.main.viewpager.myContacts.addContact.AddContactDialogFragment.Companion.TAG_ADD_CONTACT
 import com.example.task4.ui.main.viewpager.myContacts.addContact.ConfirmationListener
+import com.example.task4.ui.utils.ext.swipeToDelete
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
@@ -30,7 +29,7 @@ class MyContactsFragment :
     BaseFragment<FragmentMyContactsBinding>(FragmentMyContactsBinding::inflate),
     ConfirmationListener {
 
-    private val contactViewModel: MyContactsViewModel by viewModels()
+    private val viewModel: MyContactsViewModel by viewModels()
     private lateinit var contactAdapter: ContactAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,9 +60,8 @@ class MyContactsFragment :
         contactAdapter = ContactAdapter(contactActionListener = object : ContactActionListener {
 
             override fun onContactDelete(contact: ContactListItem) {
-                val index = contactViewModel.getContactIndex(contact.contact)
-                contactViewModel.deleteContact(contact.contact)
-                showDeleteMessage(index, contact.contact)
+                viewModel.deleteContact(contact.contact)
+                showDeleteMessage()
             }
 
             override fun onContactClick(
@@ -71,7 +69,7 @@ class MyContactsFragment :
                 transitionNames: Array<Pair<View, String>>
             ) {
                 if (contactAdapter.isMultiSelectMode) {
-                    with(contactViewModel) {
+                    with(viewModel) {
                         toggle(contact)
 
                         if (!contactAdapter.isMultiSelectMode) {
@@ -89,7 +87,7 @@ class MyContactsFragment :
             }
 
             override fun onContactLongClick(contact: ContactListItem) {
-                with(contactViewModel) {
+                with(viewModel) {
                     if (contactAdapter.isMultiSelectMode) {
                         clearSelectedItems()
                     } else {
@@ -112,7 +110,7 @@ class MyContactsFragment :
         postponeEnterTransition()
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                contactViewModel.stateFlow.collect { state ->
+                viewModel.stateFlow.collect { state ->
                     if (state != null) {
                         contactAdapter.isMultiSelectMode = state.isMultiSelect
                         contactAdapter.submitList(state.contacts)
@@ -124,31 +122,16 @@ class MyContactsFragment :
     }
 
     private fun addSwipeToDelete() {
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
-            0,
-            ItemTouchHelper.END or ItemTouchHelper.START
-        ) {
-
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean = false
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val index = viewHolder.adapterPosition
-                val contact: Contact = contactViewModel.getContact(index)
-
-                contactViewModel.deleteContact(contact)
-                showDeleteMessage(index, contact)
-            }
-        }).attachToRecyclerView(binding.fragmentMyContactRecyclerViewContacts)
+        binding.fragmentMyContactRecyclerViewContacts.swipeToDelete { index ->
+            viewModel.deleteContact(index) // todo
+            showDeleteMessage()
+        }
     }
 
-    private fun showDeleteMessage(index: Int, contact: Contact) {
+    private fun showDeleteMessage() {
         Snackbar.make(binding.root, R.string.message_delete, Snackbar.LENGTH_LONG)
             .setAction(getString(R.string.snackbar_action).uppercase()) {
-                contactViewModel.addContact(index, contact)
+                viewModel.restoreContact()
             }.setActionTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -165,7 +148,7 @@ class MyContactsFragment :
     }
 
     override fun onConfirmButtonClicked(contact: Contact) {
-        contactViewModel.addContact(contact)
+        viewModel.addContact(contact)
         Snackbar.make(binding.root, R.string.message_add_contact, Snackbar.LENGTH_SHORT)
             .setTextColor(
                 ContextCompat.getColor(

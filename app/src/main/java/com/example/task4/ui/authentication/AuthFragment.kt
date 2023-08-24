@@ -6,6 +6,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import com.example.task4.R
 import com.example.task4.base.BaseFragment
+import com.example.task4.constants.Constants.PASSWORD_LENGTH
 import com.example.task4.constants.Validation.CODE_DIGITS
 import com.example.task4.constants.Validation.CODE_LENGTH
 import com.example.task4.constants.Validation.CODE_SPACES
@@ -47,7 +48,7 @@ class AuthFragment
     private fun startNextFragment() {
         val email = binding.fragmentAuthEditTextEmail.text.toString()
 
-        val direction = AuthenticationFragmentDirections.startMainActivity(email)
+        val direction = AuthFragmentDirections.startMainActivity(email)
 
         navController.navigate(direction)
     }
@@ -72,7 +73,7 @@ class AuthFragment
                 fragmentAuthContainerPassword.error =
                     when (viewModel.passwordIsValid(password)) {
                         CODE_SPACES -> getString(R.string.dont_use_spaces)
-                        CODE_LENGTH -> getString(R.string.min_length_password)
+                        CODE_LENGTH -> getString(R.string.min_length_password, PASSWORD_LENGTH)
                         CODE_UPPER_CASE -> getString(R.string.contain_upper_case_chars)
                         CODE_DIGITS -> getString(R.string.contain_digit_chars)
                         else -> null
@@ -84,9 +85,12 @@ class AuthFragment
     private fun fieldsIsEmpty(): Boolean {
         with(binding) {
             val validEmail = fragmentAuthContainerEmail.error == null
-            val validPassword = fragmentAuthContainerPassword.error == null
+                    && fragmentAuthEditTextPassword.text.toString().isNotEmpty()
 
-            if (validEmail and validPassword)
+            val validPassword = fragmentAuthContainerPassword.error == null
+                    && fragmentAuthEditTextPassword.text.toString().isNotEmpty()
+
+            if (validEmail && validPassword)
                 return false
 
             return true

@@ -2,6 +2,7 @@ package com.example.task4.ui.main.viewpager.myProfile
 
 import android.Manifest
 import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.task4.base.BaseFragment
 import com.example.task4.constants.Validation.REGEX_EMAIL_PARSE
 import com.example.task4.databinding.FragmentMyProfileBinding
+import com.example.task4.ui.authentication.AuthActivity
 import com.example.task4.ui.main.viewpager.ViewPagerFragment
 import com.example.task4.ui.utils.ext.setContactPhoto
 import java.util.Locale
@@ -56,7 +58,10 @@ class MyProfileFragment
     }
 
     private fun logout() {
-        navController.popBackStack() // todo : fix (change to start auth activity)
+        val activity = requireActivity()
+        val intentObject = Intent(activity, AuthActivity::class.java)
+        startActivity(intentObject)
+        activity.finish()
     }
 
     private fun viewMyContactsButton() {

@@ -4,12 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.task4.data.contacts.ContactService
 import com.example.task4.data.models.Contact
+import com.example.task4.ui.main.viewpager.myContacts.model.ContactListItem
 import com.example.task4.ui.main.viewpager.myContacts.multiselect.ContactMultiSelectHandler
 import com.example.task4.ui.main.viewpager.myContacts.multiselect.MultiSelectState
+import com.example.task4.ui.utils.ext.logExt
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class MyContactsViewModel : ViewModel() {
@@ -28,14 +31,28 @@ class MyContactsViewModel : ViewModel() {
                 contactMultiSelectHandler.listen(),
                 ::merge
             )
-            combinedFlow.collectLatest {
-                _stateFlow.value = it
+            combinedFlow.collectLatest { flow ->
+                _stateFlow.value = flow
+                flow.contacts.forEach { logExt("${it.name} ${it.isChecked}") }
+                logExt("--------------------------------------------------------------------------------")
             }
         }
     }
 
+    fun setContacts() = contactService.setPhoneContacts()
+
     fun deleteContact(index: Int) = contactService.deleteContact(index)
     fun deleteContact(contact: Contact) = contactService.deleteContact(contactService.contacts.value.indexOf(contact))
+
+    /**
+     * Delete all selected cats
+     */
+    fun deleteSelectedItems() {
+        viewModelScope.launch {
+            val currentMultiChoiceState = contactMultiSelectHandler.listen().first()
+            contactService.deleteSelectedItems(currentMultiChoiceState)
+        }
+    }
     fun restoreContact() = contactService.restoreContact()
 
     fun addContact(contact: Contact) {

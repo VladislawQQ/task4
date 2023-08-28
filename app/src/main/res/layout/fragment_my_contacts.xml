@@ -101,6 +101,21 @@
         app:layout_constraintBottom_toBottomOf="@+id/fragment_my_contact_view_top"
         />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_view_get_contacts"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_big"
+
+        android:textAppearance="@style/open_sans_font"
+        android:text="@string/get_contacts"
+        android:textSize="@dimen/contact_item_text_size_add_contact"
+        android:textColor="@color/label_text_color"
+
+        app:layout_constraintEnd_toEndOf="@id/content_end"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_my_contact_view_top"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_my_contact_recycler_view_contacts"
         android:layout_width="0dp"
@@ -108,10 +123,23 @@
         android:background="@color/label_text_color"
         android:layout_marginTop="@dimen/margin_medium"
 
-        app:layout_constraintBottom_toBottomOf="@id/content_bottom"
+        app:layout_constraintBottom_toTopOf="@id/image_view_bucket"
         app:layout_constraintEnd_toEndOf="@id/content_end"
         app:layout_constraintStart_toStartOf="@id/content_start"
         app:layout_constraintTop_toBottomOf="@id/fragment_my_contact_view_top"
         tools:listitem="@layout/contact_item" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/image_view_bucket"
+        android:layout_width="@dimen/fragment_my_contacts_image_size_bucket"
+        android:layout_height="@dimen/fragment_my_contacts_image_size_bucket"
+        android:visibility="gone"
+
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_delete"
+        app:layout_constraintTop_toBottomOf="@id/fragment_my_contact_recycler_view_contacts"
+        app:layout_constraintBottom_toBottomOf="@id/content_bottom"
+        app:layout_constraintEnd_toEndOf="@id/content_end"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

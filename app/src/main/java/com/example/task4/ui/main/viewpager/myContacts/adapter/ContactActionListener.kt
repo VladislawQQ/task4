@@ -1,7 +1,7 @@
 package com.example.task4.ui.main.viewpager.myContacts.adapter
 
 import android.view.View
-import com.example.task4.ui.main.viewpager.myContacts.ContactListItem
+import com.example.task4.ui.main.viewpager.myContacts.model.ContactListItem
 
 interface ContactActionListener {
     fun onContactDelete(contact: ContactListItem)

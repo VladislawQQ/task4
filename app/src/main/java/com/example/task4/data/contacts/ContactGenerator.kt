@@ -1,8 +1,9 @@
 package com.example.task4.data.contacts
 
+import android.annotation.SuppressLint
 import android.provider.ContactsContract
 import com.example.task4.App
-import com.example.task4.constants.Constants.COUNT_OF_CONTACTS
+import com.example.task4.ui.utils.constants.Constants.COUNT_OF_CONTACTS
 import com.example.task4.data.models.Contact
 import com.github.javafaker.Faker
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,7 @@ class ContactGenerator {
     fun generateContacts(): MutableStateFlow<List<Contact>> {
         return MutableStateFlow(
             List(COUNT_OF_CONTACTS) { randomContact() }
-            )
+        )
     }
 
     private fun randomContact(): Contact {
@@ -30,39 +31,46 @@ class ContactGenerator {
         )
     }
 
+    @SuppressLint("Range")
     fun getPhoneContacts(): MutableList<Contact> {
 
-        val contactList : MutableList<Contact> = ArrayList()
+        val contactList: MutableList<Contact> = ArrayList()
 
         val contentResolver = App.contentResolverInstance
         val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
+        val sortOrder = ContactsContract.Contacts.DISPLAY_NAME
 
-        val cursor = contentResolver.query(uri,
+        val cursor = contentResolver.query(
+            uri,
             null,
             null,
             null,
-            null,
+            sortOrder,
             null
         )
 
-        cursor?.use {
-            if (cursor.count > 0) {
+        cursor?.let {
+            while (cursor.moveToNext()) {
+//              val name = cursor.use { ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME } //  why not working?
+                val name = cursor.getString(
+                    cursor.getColumnIndex(
+                        ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
+                    )
+                )
+                val contact = Contact(
+                    photo = "",
+                    name = name,
+                    career = "",
+                    email = "",
+                    phone = "",
+                    address = "",
+                    dateOfBirthday = ""
+                )
 
-                while (cursor.moveToNext()) {
-                    val name = cursor.use { ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME }
-                    val contact = Contact(
-                        photo = "",
-                        name = name,
-                        career = "",
-                        email = "",
-                        phone = "",
-                        address = "",
-                        dateOfBirthday = "")
-
-                    contactList.add(contact)
-                }
+                contactList.add(contact)
             }
         }
+        cursor?.close()
 
         return contactList
     }

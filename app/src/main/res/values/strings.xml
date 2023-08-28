@@ -55,5 +55,6 @@
     <string name="profile">Profile</string>
     <string name="message">message</string>
     <string name="fragment_my_profile_logout">Logout</string>
+    <string name="get_contacts">Get contacts</string>
 
 </resources>

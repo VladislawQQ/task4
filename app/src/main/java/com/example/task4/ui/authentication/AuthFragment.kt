@@ -1,16 +1,21 @@
 package com.example.task4.ui.authentication
 
+import android.Manifest
+import android.app.Activity
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import com.example.task4.R
 import com.example.task4.base.BaseFragment
-import com.example.task4.constants.Constants.PASSWORD_LENGTH
-import com.example.task4.constants.Validation.CODE_DIGITS
-import com.example.task4.constants.Validation.CODE_LENGTH
-import com.example.task4.constants.Validation.CODE_SPACES
-import com.example.task4.constants.Validation.CODE_UPPER_CASE
+import com.example.task4.ui.utils.constants.Constants.PASSWORD_LENGTH
+import com.example.task4.ui.utils.constants.Validation.CODE_DIGITS
+import com.example.task4.ui.utils.constants.Validation.CODE_LENGTH
+import com.example.task4.ui.utils.constants.Validation.CODE_SPACES
+import com.example.task4.ui.utils.constants.Validation.CODE_UPPER_CASE
 import com.example.task4.databinding.FragmentAuthBinding
 
 class AuthFragment
@@ -24,7 +29,8 @@ class AuthFragment
         // Email and password validation
         emailErrorChanges()
         passwordErrorChanges()
-        
+
+        askPermission()
         setListeners()
     }
 
@@ -95,5 +101,24 @@ class AuthFragment
 
             return true
         }
+    }
+
+    private fun askPermission() {
+        val hasReadContactPermission =
+            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS)
+
+        if (hasReadContactPermission == PackageManager.PERMISSION_GRANTED) {
+            READ_CONTACTS_GRANTED = true
+        } else {
+            ActivityCompat.requestPermissions(
+                requireContext() as Activity,
+                arrayOf(Manifest.permission.READ_CONTACTS),
+                1
+            )
+        }
+    }
+
+    companion object {
+        private var READ_CONTACTS_GRANTED = false
     }
 }

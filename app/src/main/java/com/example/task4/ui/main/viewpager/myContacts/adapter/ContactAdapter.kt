@@ -9,11 +9,11 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task4.R
-import com.example.task4.constants.Constants.TRANSITION_NAME_CAREER
-import com.example.task4.constants.Constants.TRANSITION_NAME_CONTACT_NAME
-import com.example.task4.constants.Constants.TRANSITION_NAME_IMAGE
+import com.example.task4.ui.utils.constants.Constants.TRANSITION_NAME_CAREER
+import com.example.task4.ui.utils.constants.Constants.TRANSITION_NAME_CONTACT_NAME
+import com.example.task4.ui.utils.constants.Constants.TRANSITION_NAME_IMAGE
 import com.example.task4.databinding.ContactItemBinding
-import com.example.task4.ui.main.viewpager.myContacts.ContactListItem
+import com.example.task4.ui.main.viewpager.myContacts.model.ContactListItem
 import com.example.task4.ui.main.viewpager.myContacts.adapter.diffUtil.ContactDiffUtil
 import com.example.task4.ui.utils.ext.setContactPhoto
 

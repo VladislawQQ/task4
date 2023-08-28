@@ -35,6 +35,7 @@
     <!-- fragment my contacts -->
 
     <dimen name="fragment_my_contacts_text_size_contacts_label">24sp</dimen>
+    <dimen name="fragment_my_contacts_image_size_bucket">80dp</dimen>
 
     <!-- contact item -->
 

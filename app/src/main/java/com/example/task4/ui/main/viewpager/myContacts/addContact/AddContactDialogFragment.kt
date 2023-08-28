@@ -4,8 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.example.task4.constants.Constants.DEFAULT_NAME
-import com.example.task4.data.contacts.ContactGenerator
+import com.example.task4.ui.utils.constants.Constants.DEFAULT_NAME
 import com.example.task4.data.models.Contact
 import com.example.task4.databinding.DialogAddContactBinding
 import com.example.task4.ui.utils.ext.setContactPhoto

@@ -10,7 +10,7 @@ import com.example.task4.databinding.FragmentViewPagerBinding
 import com.example.task4.base.BaseFragment
 import com.example.task4.ui.main.viewpager.myContacts.MyContactsFragment
 import com.example.task4.ui.main.viewpager.myProfile.MyProfileFragment
-import com.example.task4.constants.Constants.FRAGMENT_COUNT
+import com.example.task4.ui.utils.constants.Constants.FRAGMENT_COUNT
 import com.google.android.material.tabs.TabLayoutMediator
 
 class ViewPagerFragment

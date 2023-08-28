@@ -1,16 +1,11 @@
 package com.example.task4.ui.main.viewpager.myProfile
 
-import android.Manifest
-import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.navArgs
 import com.example.task4.base.BaseFragment
-import com.example.task4.constants.Validation.REGEX_EMAIL_PARSE
+import com.example.task4.ui.utils.constants.Validation.REGEX_EMAIL_PARSE
 import com.example.task4.databinding.FragmentMyProfileBinding
 import com.example.task4.ui.authentication.AuthActivity
 import com.example.task4.ui.main.viewpager.ViewPagerFragment
@@ -25,7 +20,6 @@ class MyProfileFragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        askPermission()
         setListeners()
         roundProfilePhoto()
         setNameByEmail(args.email)
@@ -70,26 +64,6 @@ class MyProfileFragment
 
     private fun parseEmail(email: String): List<String> {
         return REGEX_EMAIL_PARSE.toRegex().replace(email, "").split(".")
-    }
-
-
-    private fun askPermission() {
-        val hasReadContactPermission =
-            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS)
-
-        if (hasReadContactPermission == PackageManager.PERMISSION_GRANTED) {
-            READ_CONTACTS_GRANTED = true
-        } else {
-            ActivityCompat.requestPermissions(
-                requireContext() as Activity,
-                arrayOf(Manifest.permission.READ_CONTACTS),
-                1
-            )
-        }
-    }
-
-    companion object {
-        private var READ_CONTACTS_GRANTED = false
     }
 
 }

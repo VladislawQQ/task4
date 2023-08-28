@@ -2,17 +2,17 @@ plugins {
     id 'com.android.application'                // core
     id 'org.jetbrains.kotlin.android'           // core
     id 'androidx.navigation.safeargs.kotlin'    // safe args for navigation
-    id 'kotlin-parcelize'                       // parcelize
+    id 'kotlin-parcelize'                       // parcelize for safe args model
 }
 
 android {
     namespace 'com.example.task4'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.example.task4"
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 

@@ -1,22 +1,17 @@
 package com.example.task4.ui.authentication
 
-import android.Manifest
-import android.app.Activity
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import com.example.task4.R
 import com.example.task4.base.BaseFragment
+import com.example.task4.databinding.FragmentAuthBinding
 import com.example.task4.ui.utils.constants.Constants.PASSWORD_LENGTH
 import com.example.task4.ui.utils.constants.Validation.CODE_DIGITS
 import com.example.task4.ui.utils.constants.Validation.CODE_LENGTH
 import com.example.task4.ui.utils.constants.Validation.CODE_SPACES
 import com.example.task4.ui.utils.constants.Validation.CODE_UPPER_CASE
-import com.example.task4.databinding.FragmentAuthBinding
 
 class AuthFragment
     : BaseFragment<FragmentAuthBinding>(FragmentAuthBinding::inflate) {

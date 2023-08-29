@@ -2,7 +2,6 @@ package com.example.task4.ui.main.contactProfile
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater

@@ -1,9 +1,11 @@
 package com.example.task4.ui.main.viewpager.myContacts
 
+import android.Manifest
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -69,7 +71,8 @@ class MyContactsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        bindRecycleView()
+        requestReadContactsPermission() // ask permission for READ_CONTACTS
+        bindRecycleView()               // create rv adapter and bind
         observeViewModel()
         addSwipeToDelete()
         setListeners()
@@ -78,7 +81,7 @@ class MyContactsFragment :
     private fun setListeners() {
         binding.fragmentMyContactTextViewAddContact.setOnClickListener { startDialogAddContact() }
         binding.fragmentMyContactsImageViewBack.setOnClickListener { imageViewBackListener() }
-        binding.textViewGetContacts.setOnClickListener { viewModel.setContacts() }
+        binding.textViewGetContacts.setOnClickListener { requestReadContactsPermission() }
         binding.imageViewBucket.setOnClickListener { viewModel.deleteSelectedItems() }
         binding.fragmentMyContactImageViewSearch.setOnClickListener { } // TODO: search in contacts
     }
@@ -180,4 +183,16 @@ class MyContactsFragment :
 
         navController.navigate(direction, extras)
     }
+
+    private val permission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        if (granted) viewModel.setPhoneContacts()
+    }
+
+    /**
+     * Start activity with request permission for read contacts from phonebook.
+     */
+    private fun requestReadContactsPermission() {
+        permission.launch(Manifest.permission.READ_CONTACTS)
+    }
+
 }

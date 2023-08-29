@@ -38,7 +38,7 @@
         android:id="@+id/fragment_my_contact_view_top"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/view_color"
+        android:background="?attr/colorPrimary"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"

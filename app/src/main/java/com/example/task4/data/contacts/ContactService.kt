@@ -22,19 +22,9 @@ class ContactService : ContactMultiSelectHandler() {
     }
 
     private fun setContacts() {
-        val contactsPhone = MutableStateFlow<List<Contact>>(emptyList())
-        try {
-            contactsPhone.value = contactProvider.getPhoneContacts()
-        } catch (e: Exception) {
-            logExt("Catch! ${e.message}")
-        }
-
-        logExt("Contacts : ${contactsPhone.value.size}")
-        _contacts.value =
-            contactsPhone.value.ifEmpty {
-                contactProvider.generateContacts().value
-            }
+        _contacts.value = contactProvider.generateContacts().value
     }
+
     fun setPhoneContacts() {
         val contactsPhone = MutableStateFlow<List<Contact>>(emptyList())
 

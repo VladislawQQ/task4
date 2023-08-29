@@ -10,7 +10,6 @@ import com.example.task4.databinding.ActivityMainBinding
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
     private lateinit var navController: NavController
-
     override fun setIncomingArguments(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) return
         val navHostFragment =

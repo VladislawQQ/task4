@@ -39,8 +39,7 @@ class MyContactsViewModel : ViewModel() {
         }
     }
 
-    fun setContacts() = contactService.setPhoneContacts()
-
+    fun setPhoneContacts() = contactService.setPhoneContacts()
     fun deleteContact(index: Int) = contactService.deleteContact(index)
     fun deleteContact(contact: Contact) = contactService.deleteContact(contactService.contacts.value.indexOf(contact))
 

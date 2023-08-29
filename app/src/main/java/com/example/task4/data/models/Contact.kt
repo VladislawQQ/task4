@@ -2,7 +2,6 @@ package com.example.task4.data.models
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import java.util.Date
 import java.util.UUID
 
 @Parcelize

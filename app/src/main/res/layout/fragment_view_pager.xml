@@ -10,7 +10,7 @@
         android:id="@+id/tab_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/view_color"
+        android:background="?attr/colorPrimary"
         app:tabTextColor="@color/label_text_color"
         app:tabIndicatorColor="@color/label_text_color"
 

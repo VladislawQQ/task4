@@ -3,26 +3,26 @@ package com.example.task4.ui.main.viewpager.myProfile
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.fragment.navArgs
+import androidx.fragment.app.viewModels
 import com.example.task4.base.BaseFragment
-import com.example.task4.ui.utils.constants.Validation.REGEX_EMAIL_PARSE
 import com.example.task4.databinding.FragmentMyProfileBinding
 import com.example.task4.ui.authentication.AuthActivity
 import com.example.task4.ui.main.viewpager.ViewPagerFragment
+import com.example.task4.ui.utils.constants.Validation.REGEX_EMAIL_PARSE
 import com.example.task4.ui.utils.ext.setContactPhoto
 import java.util.Locale
 
 class MyProfileFragment
     : BaseFragment<FragmentMyProfileBinding>(FragmentMyProfileBinding::inflate) {
 
-    private val args: MyProfileFragmentArgs by navArgs()
+    private val viewModel : MyProfileViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setListeners()
         roundProfilePhoto()
-        setNameByEmail(args.email)
+        setNameByEmail(viewModel.userEmail)
     }
 
     private fun roundProfilePhoto() {

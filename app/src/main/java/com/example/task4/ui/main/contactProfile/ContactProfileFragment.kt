@@ -2,13 +2,14 @@ package com.example.task4.ui.main.contactProfile
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.example.task4.R
+import com.example.task4.base.BaseFragment
 import com.example.task4.data.models.Contact
 import com.example.task4.databinding.FragmentContactProfileBinding
-import com.example.task4.base.BaseFragment
 import com.example.task4.ui.utils.constants.Constants.TRANSITION_NAME_CAREER
 import com.example.task4.ui.utils.constants.Constants.TRANSITION_NAME_CONTACT_NAME
 import com.example.task4.ui.utils.constants.Constants.TRANSITION_NAME_IMAGE
@@ -17,14 +18,13 @@ import com.example.task4.ui.utils.ext.setContactPhoto
 class ContactProfileFragment
     : BaseFragment<FragmentContactProfileBinding>(FragmentContactProfileBinding::inflate){
 
-    private val args : ContactProfileFragmentArgs by navArgs()
+    private val viewModel : ContactProfileModelView by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val contact : Contact = args.contact
 
         attachAnimation()
-        bindContactInfo(contact)
+        bindContactInfo(viewModel.contact)
         setListeners()
     }
 
@@ -52,6 +52,4 @@ class ContactProfileFragment
             fragmentMyProfileImageViewProfilePhoto.setContactPhoto(contact.photo)
         }
     }
-
-
 }

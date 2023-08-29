@@ -30,7 +30,6 @@ class AuthFragment
         emailErrorChanges()
         passwordErrorChanges()
 
-        askPermission()
         setListeners()
     }
 
@@ -101,24 +100,5 @@ class AuthFragment
 
             return true
         }
-    }
-
-    private fun askPermission() {
-        val hasReadContactPermission =
-            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS)
-
-        if (hasReadContactPermission == PackageManager.PERMISSION_GRANTED) {
-            READ_CONTACTS_GRANTED = true
-        } else {
-            ActivityCompat.requestPermissions(
-                requireContext() as Activity,
-                arrayOf(Manifest.permission.READ_CONTACTS),
-                1
-            )
-        }
-    }
-
-    companion object {
-        private var READ_CONTACTS_GRANTED = false
     }
 }

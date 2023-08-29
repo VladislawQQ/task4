@@ -1,4 +1,13 @@
 package com.example.task4.ui.main.contactProfile
 
-class ContactProfileModelView {
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+
+class ContactProfileModelView(
+    savedStateHandle: SavedStateHandle
+) : ViewModel() {
+
+    private val args = ContactProfileFragmentArgs.fromSavedStateHandle(savedStateHandle)
+
+    val contact = args.contact
 }

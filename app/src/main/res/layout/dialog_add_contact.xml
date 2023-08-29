@@ -14,7 +14,7 @@
             android:id="@+id/dialog_add_contact_view_top"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/view_color"
+            android:background="?attr/colorPrimary"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.2"

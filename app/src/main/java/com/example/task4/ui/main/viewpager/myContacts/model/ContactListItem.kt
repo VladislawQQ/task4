@@ -4,7 +4,8 @@ import com.example.task4.data.models.Contact
 
 data class ContactListItem(
     val contact : Contact,
-    val isChecked : Boolean
+    val isChecked : Boolean,
+    var isMultiselect: Boolean
 ) {
     val id: Long = contact.id
     val photo: String = contact.photo

@@ -1,5 +1,6 @@
 package com.example.task4.ui.main.viewpager.myContacts
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.task4.data.contacts.ContactService
@@ -7,10 +8,8 @@ import com.example.task4.data.models.Contact
 import com.example.task4.ui.main.viewpager.myContacts.model.ContactListItem
 import com.example.task4.ui.main.viewpager.myContacts.multiselect.ContactMultiSelectHandler
 import com.example.task4.ui.main.viewpager.myContacts.multiselect.MultiSelectState
-import com.example.task4.ui.utils.ext.logExt
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -20,8 +19,10 @@ class MyContactsViewModel : ViewModel() {
     private val contactService = ContactService()
     private val contactMultiSelectHandler = ContactMultiSelectHandler()
 
-    private val _stateFlow = MutableStateFlow<State?>(null)
+    private val _stateFlow = MutableStateFlow(emptyList<ContactListItem>())
     val stateFlow = _stateFlow.asStateFlow()
+
+    val isMultiselect : MutableLiveData<Boolean> = MutableLiveData(false)
 
     init {
         viewModelScope.launch {
@@ -31,10 +32,8 @@ class MyContactsViewModel : ViewModel() {
                 contactMultiSelectHandler.listen(),
                 ::merge
             )
-            combinedFlow.collectLatest { flow ->
+            combinedFlow.collect { flow ->
                 _stateFlow.value = flow
-                flow.contacts.forEach { logExt("${it.name} ${it.isChecked}") }
-                logExt("--------------------------------------------------------------------------------")
             }
         }
     }
@@ -64,19 +63,18 @@ class MyContactsViewModel : ViewModel() {
         contactMultiSelectHandler.toggle(contact.contact)
     }
 
+    fun contactsIsSelected() : Boolean = contactMultiSelectHandler.totalCheckedCount > 0
+
+    fun swapIsMultiselect() {
+        isMultiselect.value = !isMultiselect.value!!
+    }
+
     /**
      * Merge cats from the model scope (singleton) and selection state from the view model scope.
      */
-    private fun merge(contacts: List<Contact>, multiChoiceState: MultiSelectState<Contact>): State {
-        return State(
-            contacts = contacts.map { contact ->
-                ContactListItem(contact, multiChoiceState.isChecked(contact))
-            },
-            isMultiSelect = multiChoiceState.totalCheckedCount > 0
-        )
+    private fun merge(contacts: List<Contact>, multiSelectState: MultiSelectState<Contact>): List<ContactListItem> {
+        return contacts.map { contact ->
+            ContactListItem(contact, multiSelectState.isChecked(contact), multiSelectState.totalCheckedCount > 0)
+        }
     }
-    class State(
-        val contacts: List<ContactListItem>,
-        val isMultiSelect: Boolean
-    )
 }

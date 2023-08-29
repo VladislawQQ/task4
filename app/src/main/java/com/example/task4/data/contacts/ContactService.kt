@@ -23,6 +23,7 @@ class ContactService : ContactMultiSelectHandler() {
 
     private fun setContacts() {
         _contacts.value = contactProvider.generateContacts().value
+        logExt(_contacts.value.size.toString())
     }
 
     fun setPhoneContacts() {

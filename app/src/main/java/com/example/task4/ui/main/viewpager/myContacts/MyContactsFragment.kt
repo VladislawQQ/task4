@@ -36,6 +36,7 @@ class MyContactsFragment :
     ConfirmationListener {
 
     private val viewModel: MyContactsViewModel by viewModels()
+
     private val contactAdapter by lazy {
         ContactAdapter(contactActionListener = object :
             ContactActionListener {
@@ -49,20 +50,25 @@ class MyContactsFragment :
                 contact: ContactListItem,
                 transitionNames: Array<Pair<View, String>>
             ) {
-                if (viewModel.stateFlow.value!!.isMultiSelect) {
-                    viewModel.toggle(contact)
-                } else {
-                    startContactProfileFragment(transitionNames, contact.contact)
+                with(viewModel) {
+                    if (isMultiselect.value == true) {
+                        toggle(contact)
+                        if (!contactsIsSelected())
+                            swapIsMultiselect()
+                    } else {
+                        startContactProfileFragment(transitionNames, contact.contact)
+                    }
                 }
             }
 
             override fun onContactLongClick(contact: ContactListItem) {
                 with(viewModel) {
-                    if (stateFlow.value!!.isMultiSelect) {
+                    if (isMultiselect.value == true) {
                         clearSelectedItems()
                     } else {
                         toggle(contact)
                     }
+                    swapIsMultiselect()
                 }
             }
         })
@@ -107,15 +113,16 @@ class MyContactsFragment :
     private fun observeViewModel() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.stateFlow.collect { state ->
-                    if (state != null) {
-                        contactAdapter.isMultiSelectMode = state.isMultiSelect
-                        binding.imageViewBucket.visibility = if (state.isMultiSelect) VISIBLE else GONE
-                        contactAdapter.submitList(state.contacts)
-                        binding.fragmentMyContactRecyclerViewContacts.adapter = contactAdapter
-                    }
+                viewModel.stateFlow.collect { contacts ->
+                    contactAdapter.submitList(contacts)
                 }
             }
+        }
+
+        viewModel.isMultiselect.observe(viewLifecycleOwner) { isMultiselect ->
+            contactAdapter.isMultiSelectMode = isMultiselect
+            binding.imageViewBucket.visibility = if (isMultiselect) VISIBLE else GONE
+            binding.fragmentMyContactRecyclerViewContacts.adapter = contactAdapter
         }
     }
 
@@ -136,7 +143,7 @@ class MyContactsFragment :
             }
 
             override fun isItemViewSwipeEnabled(): Boolean {
-                return !(viewModel.stateFlow.value?.isMultiSelect ?: false)
+                return !(viewModel.isMultiselect.value)!!
             }
         }).attachToRecyclerView(binding.fragmentMyContactRecyclerViewContacts)
     }
@@ -184,9 +191,10 @@ class MyContactsFragment :
         navController.navigate(direction, extras)
     }
 
-    private val permission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-        if (granted) viewModel.setPhoneContacts()
-    }
+    private val permission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            if (granted) viewModel.setPhoneContacts()
+        }
 
     /**
      * Start activity with request permission for read contacts from phonebook.

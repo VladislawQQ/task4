@@ -19,6 +19,8 @@ class ContactProfileFragment
 
     private val viewModel : ContactProfileModelView by viewModels()
 
+    // TODO: from popBackStack() to navigateUp()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

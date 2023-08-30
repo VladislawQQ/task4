@@ -1,7 +1,7 @@
 package com.example.task4.ui.authentication
 
 import androidx.lifecycle.ViewModel
-import com.example.task4.ui.utils.constants.Validation
+import com.example.task4.ui.utils.Validation
 
 class AuthViewModel : ViewModel() {
 

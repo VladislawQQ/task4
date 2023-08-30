@@ -1,10 +1,9 @@
 package com.example.task4.data.contacts
 
-import android.annotation.SuppressLint
 import android.provider.ContactsContract
 import com.example.task4.App
-import com.example.task4.ui.utils.constants.Constants.COUNT_OF_CONTACTS
 import com.example.task4.data.models.Contact
+import com.example.task4.ui.utils.Constants.COUNT_OF_CONTACTS
 import com.github.javafaker.Faker
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.Random
@@ -12,71 +11,59 @@ import java.util.Random
 class ContactGenerator {
     private val faker = Faker.instance()
 
-    fun generateContacts(): MutableStateFlow<List<Contact>> {
-        return MutableStateFlow(
+    fun generateContacts(): MutableStateFlow<List<Contact>>
+        = MutableStateFlow(
             List(COUNT_OF_CONTACTS) { randomContact() }
-        )
-    }
+            )
 
-    private fun randomContact(): Contact {
-        return Contact(
+
+    private fun randomContact(): Contact
+        = Contact( // TODO: set default values
             name = faker.name().fullName(),
             career = faker.job().position(),
-            photo = IMAGES[Random().nextInt(IMAGES.size - 1)],
-            email = "",
-            phone = "",
-            address = "",
-            dateOfBirthday = ""
-
+            photo = IMAGES[Random().nextInt(IMAGES.size - 1)]
         )
-    }
 
-    @SuppressLint("Range")
+
     fun getPhoneContacts(): MutableList<Contact> {
 
-        val contactList: MutableList<Contact> = ArrayList()
+        val contactList : MutableList<Contact> = ArrayList()
 
         val contentResolver = App.contentResolverInstance
         val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
-        val sortOrder = ContactsContract.Contacts.DISPLAY_NAME
 
-        val cursor = contentResolver.query(
-            uri,
+        val cursor = contentResolver.query(uri,
             null,
             null,
             null,
-            sortOrder,
+            null,
             null
         )
 
-        cursor?.let {
-            while (cursor.moveToNext()) {
-//              val name = cursor.use { ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME } //  why not working?
-                val name = cursor.getString(
-                    cursor.getColumnIndex(
-                        ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
-                    )
-                )
-                val contact = Contact(
-                    photo = "",
-                    name = name,
-                    career = "",
-                    email = "",
-                    phone = "",
-                    address = "",
-                    dateOfBirthday = ""
-                )
+        cursor?.use {
+            if (cursor.count > 0) {
 
-                contactList.add(contact)
+                while (cursor.moveToNext()) {
+                    val name = cursor.use { ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME }
+                    val contact = Contact( // TODO: set default values
+                        photo = "",
+                        name = name,
+                        career = "",
+                        email = "",
+                        phone = "",
+                        address = "",
+                        dateOfBirthday = "")
+
+                    contactList.add(contact)
+                }
             }
         }
-        cursor?.close()
 
         return contactList
     }
 
     companion object {
-        private val IMAGES = mutableListOf(
+        private val IMAGES = mutableListOf( // TODO: mutable, why?
             "https://images.unsplash.com/photo-1600267185393-e158a98703de?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&ixid=MnwxfDB8MXxyYW5kb218fHx8fHx8fHwxNjI0MDE0NjQ0&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
             "https://images.unsplash.com/photo-1579710039144-85d6bdffddc9?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&ixid=MnwxfDB8MXxyYW5kb218fHx8fHx8fHwxNjI0MDE0Njk1&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
             "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&ixid=MnwxfDB8MXxyYW5kb218fHx8fHx8fHwxNjI0MDE0ODE0&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",

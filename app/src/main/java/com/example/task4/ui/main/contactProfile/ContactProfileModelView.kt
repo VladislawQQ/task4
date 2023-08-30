@@ -7,7 +7,7 @@ class ContactProfileModelView(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val args = ContactProfileFragmentArgs.fromSavedStateHandle(savedStateHandle)
+    private val args = ContactProfileFragmentArgs.fromSavedStateHandle(savedStateHandle)  // TODO: from viewModel
 
     val contact = args.contact
 }

@@ -66,7 +66,7 @@ class MyContactsViewModel : ViewModel() {
     fun contactsIsSelected() : Boolean = contactMultiSelectHandler.totalCheckedCount > 0
 
     fun swapIsMultiselect() {
-        isMultiselect.value = !isMultiselect.value!!
+        isMultiselect.value?.let {isMultiselect.value = !it}
     }
 
     /**

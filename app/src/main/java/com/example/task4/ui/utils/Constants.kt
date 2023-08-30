@@ -1,4 +1,4 @@
-package com.example.task4.ui.utils.constants
+package com.example.task4.ui.utils
 
 object Constants {
 
@@ -10,11 +10,14 @@ object Constants {
     // Validation
     const val PASSWORD_LENGTH = 8
 
-    // ViewPager2
-    const val FRAGMENT_COUNT = 2
-
     // Contact Generator
     const val COUNT_OF_CONTACTS = 15
 
     const val DEFAULT_NAME = "Hto Ya"
+
+
+    enum class SCREENS {
+        PROFILE_SCREEN,
+        CONTACTS_SCREEN
+    }
 }

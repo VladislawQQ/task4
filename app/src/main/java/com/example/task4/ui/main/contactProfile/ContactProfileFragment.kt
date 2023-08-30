@@ -4,28 +4,28 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.example.task4.R
 import com.example.task4.base.BaseFragment
 import com.example.task4.data.models.Contact
 import com.example.task4.databinding.FragmentContactProfileBinding
-import com.example.task4.ui.utils.constants.Constants.TRANSITION_NAME_CAREER
-import com.example.task4.ui.utils.constants.Constants.TRANSITION_NAME_CONTACT_NAME
-import com.example.task4.ui.utils.constants.Constants.TRANSITION_NAME_IMAGE
+import com.example.task4.ui.utils.Constants.TRANSITION_NAME_CAREER
+import com.example.task4.ui.utils.Constants.TRANSITION_NAME_CONTACT_NAME
+import com.example.task4.ui.utils.Constants.TRANSITION_NAME_IMAGE
 import com.example.task4.ui.utils.ext.setContactPhoto
 
 class ContactProfileFragment
-    : BaseFragment<FragmentContactProfileBinding>(FragmentContactProfileBinding::inflate){
+    : BaseFragment<FragmentContactProfileBinding>(FragmentContactProfileBinding::inflate) {
 
-    private val viewModel : ContactProfileModelView by viewModels()
-
-    // TODO: from popBackStack() to navigateUp()
+    private val viewModel: ContactProfileModelView by viewModels()
+    private val args: ContactProfileFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         attachAnimation()
-        bindContactInfo(viewModel.contact)
+        bindContactInfo(args.contact)
         setListeners()
     }
 
@@ -36,14 +36,15 @@ class ContactProfileFragment
             fragmentMyProfileTextViewCareer.transitionName = TRANSITION_NAME_CAREER
         }
 
-        val animation = TransitionInflater.from(requireContext()).inflateTransition(R.transition.transition_move)
+        val animation = TransitionInflater.from(requireContext())
+            .inflateTransition(R.transition.transition_move)
 
         sharedElementEnterTransition = animation
         sharedElementReturnTransition = animation
     }
 
     private fun setListeners() {
-        binding.fragmentMyProfileTextViewBack.setOnClickListener { findNavController().popBackStack() }
+        binding.fragmentMyProfileTextViewBack.setOnClickListener { findNavController().popBackStack() } // TODO: from popBackStack() to navigateUp()
     }
 
     private fun bindContactInfo(contact: Contact) {

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -28,6 +29,7 @@ import com.example.task4.ui.main.viewpager.myContacts.addContact.AddContactDialo
 import com.example.task4.ui.main.viewpager.myContacts.addContact.AddContactDialogFragment.Companion.TAG_ADD_CONTACT
 import com.example.task4.ui.main.viewpager.myContacts.addContact.ConfirmationListener
 import com.example.task4.ui.main.viewpager.myContacts.model.ContactListItem
+import com.example.task4.ui.utils.Constants
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
@@ -84,16 +86,35 @@ class MyContactsFragment :
         setListeners()
     }
 
-    private fun setListeners() {
-        binding.fragmentMyContactTextViewAddContact.setOnClickListener { startDialogAddContact() }
-        binding.fragmentMyContactsImageViewBack.setOnClickListener { imageViewBackListener() }
-        binding.textViewGetContacts.setOnClickListener { requestReadContactsPermission() }
-        binding.imageViewBucket.setOnClickListener { viewModel.deleteSelectedItems() }
-        binding.fragmentMyContactImageViewSearch.setOnClickListener { } // TODO: search in contacts
+    /**
+     * Start activity with request permission for read contacts from phonebook.
+     */
+    private fun requestReadContactsPermission() {
+        permission.launch(Manifest.permission.READ_CONTACTS)
+    }
+
+    private fun setListeners() { // TODO: with
+        with(binding) {
+            fragmentMyContactTextViewAddContact.setOnClickListener { startDialogAddContact() }
+            fragmentMyContactsImageViewBack.setOnClickListener { imageViewBackListener() }
+            textViewGetContacts.setOnClickListener { requestReadContactsPermission() }
+            imageViewBucket.setOnClickListener { viewModel.deleteSelectedItems() }
+            fragmentMyContactImageViewSearch.setOnClickListener { } // TODO: search in contacts
+            backPressedListener()
+        }
+    }
+
+    private fun backPressedListener() {
+        val callBack = object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                (parentFragment as ViewPagerFragment).openTab(Constants.SCREENS.PROFILE_SCREEN.ordinal)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callBack)
     }
 
     private fun imageViewBackListener() {
-        (parentFragment as ViewPagerFragment).openTab(0)
+        (parentFragment as ViewPagerFragment).openTab(Constants.SCREENS.PROFILE_SCREEN.ordinal) // TODO: to constants
     }
 
     private fun startDialogAddContact() {
@@ -102,7 +123,7 @@ class MyContactsFragment :
     }
 
     private fun bindRecycleView() {
-        val recyclerLayoutManager = LinearLayoutManager(activity)
+        val recyclerLayoutManager = LinearLayoutManager(requireContext())
 
         with(binding.fragmentMyContactRecyclerViewContacts) {
             layoutManager = recyclerLayoutManager
@@ -143,7 +164,7 @@ class MyContactsFragment :
             }
 
             override fun isItemViewSwipeEnabled(): Boolean {
-                return !(viewModel.isMultiselect.value)!!
+                return viewModel.isMultiselect.value == false // TODO: !! - bad
             }
         }).attachToRecyclerView(binding.fragmentMyContactRecyclerViewContacts)
     }
@@ -196,11 +217,5 @@ class MyContactsFragment :
             if (granted) viewModel.setPhoneContacts()
         }
 
-    /**
-     * Start activity with request permission for read contacts from phonebook.
-     */
-    private fun requestReadContactsPermission() {
-        permission.launch(Manifest.permission.READ_CONTACTS)
-    }
 
 }

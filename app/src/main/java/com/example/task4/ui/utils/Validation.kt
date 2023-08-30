@@ -1,4 +1,4 @@
-package com.example.task4.ui.utils.constants
+package com.example.task4.ui.utils // TODO: from constants package
 
 import android.util.Patterns
 

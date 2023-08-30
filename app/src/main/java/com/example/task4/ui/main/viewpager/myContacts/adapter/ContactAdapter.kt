@@ -9,9 +9,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task4.R
-import com.example.task4.ui.utils.constants.Constants.TRANSITION_NAME_CAREER
-import com.example.task4.ui.utils.constants.Constants.TRANSITION_NAME_CONTACT_NAME
-import com.example.task4.ui.utils.constants.Constants.TRANSITION_NAME_IMAGE
+import com.example.task4.ui.utils.Constants.TRANSITION_NAME_CAREER
+import com.example.task4.ui.utils.Constants.TRANSITION_NAME_CONTACT_NAME
+import com.example.task4.ui.utils.Constants.TRANSITION_NAME_IMAGE
 import com.example.task4.databinding.ContactItemBinding
 import com.example.task4.ui.main.viewpager.myContacts.model.ContactListItem
 import com.example.task4.ui.main.viewpager.myContacts.adapter.diffUtil.ContactDiffUtil
@@ -40,11 +40,13 @@ class ContactAdapter(
                 contactItemTextViewName.text = contact.name
                 contactItemTextViewCareer.text = contact.career.replaceFirstChar { it.titlecase() }
 
-                with(contactItemImageViewProfilePhoto) {
-                    if (contact.photo.isNotBlank())
-                        setContactPhoto(contact.photo)
-                    else setContactPhoto()
-                }
+                contactItemImageViewProfilePhoto.setContactPhoto(contact.photo)
+
+//                with(contactItemImageViewProfilePhoto) { // TODO: set default value
+//                    if (contact.photo.isNotBlank())
+//                        setContactPhoto(contact.photo)
+//                    else setContactPhoto()
+//                }
             }
             setListeners(contact)
         }
@@ -78,13 +80,13 @@ class ContactAdapter(
                         R.drawable.border_contact_item_multiselect
                     )
                 else
-                    ContextCompat.getDrawable(root.context, R.drawable.border_contact_item)
+                    ContextCompat.getDrawable(root.context, R.drawable.bg_border_contact_item)
             }
         }
 
         private fun onItemClick(contact: ContactListItem) {
             with(binding) {
-                contactActionListener.onContactClick(
+                contactActionListener.onContactClick( // TODO: check what here is not multi select
                     contact,
                     arrayOf(
                         setTransitionName(

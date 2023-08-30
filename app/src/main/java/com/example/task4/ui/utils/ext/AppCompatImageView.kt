@@ -16,10 +16,10 @@ val GLIDE_OPTIONS = RequestOptions()
     .priority(Priority.HIGH)
 
 fun AppCompatImageView.setContactPhoto(
-    contactPhotoUri: String = "android.resource://com.example.task3/drawable/profile_photo"
+    contactPhotoUri: String? = null
 ) {
     Glide.with(context)
-        .load(contactPhotoUri)
+        .load(contactPhotoUri ?: "android.resource://com.example.task3/drawable/profile_photo")
         .apply(GLIDE_OPTIONS)
         .into(this)
 }

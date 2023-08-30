@@ -8,7 +8,7 @@ data class ContactListItem(
     var isMultiselect: Boolean
 ) {
     val id: Long = contact.id
-    val photo: String = contact.photo
+    val photo: String? = contact.photo
     val name: String = contact.name
     val career: String = contact.career
     val email: String = contact.email

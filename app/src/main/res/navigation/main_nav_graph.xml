@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/viewPagerFragment"
-        android:name="com.example.task4.ui.main.viewpager.ViewPagerFragment"
+        android:name="com.example.messengerApp.ui.main.viewpager.ViewPagerFragment"
         android:label="fragment_view_pager"
         tools:layout="@layout/fragment_view_pager">
         <action
@@ -24,17 +24,17 @@
     </fragment>
     <fragment
         android:id="@+id/contactProfileFragment"
-        android:name="com.example.task4.ui.main.contactProfile.ContactProfileFragment"
+        android:name="com.example.messengerApp.ui.main.contactProfile.ContactProfileFragment"
         android:label="fragment_contact_profile"
         tools:layout="@layout/fragment_contact_profile" >
         <argument
             android:name="contact"
-            app:argType="com.example.task4.data.models.Contact" />
+            app:argType="com.example.messengerApp.data.models.Contact" />
     </fragment>
 
     <fragment
         android:id="@+id/myProfileFragment"
-        android:name="com.example.task4.ui.main.viewpager.myProfile.MyProfileFragment"
+        android:name="com.example.messengerApp.ui.main.viewpager.myProfile.MyProfileFragment"
         android:label="fragment_my_profile"
         tools:layout="@layout/fragment_my_profile">
         <argument

@@ -1,16 +1,25 @@
 plugins {
-    id 'com.android.application'                // core
-    id 'org.jetbrains.kotlin.android'           // core
-    id 'androidx.navigation.safeargs.kotlin'    // safe args for navigation
-    id 'kotlin-parcelize'                       // parcelize for safe args model
+    // core
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+
+    // safe args for navigation
+    id 'androidx.navigation.safeargs.kotlin'
+
+    // parcelize for safe args model
+    id 'kotlin-parcelize'
+
+    // hilt
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
-    namespace 'com.example.task4'
+    namespace 'com.example.messengerApp'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.task4"
+        applicationId "com.example.messengerApp"
         minSdk 24
         targetSdk 34
         versionCode 1
@@ -25,16 +34,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
 
+    // View binding
     buildFeatures {
         viewBinding = true
+    }
+
+    // Hilt uses Java VERSION_1_8 but kaptGenerateStubsDebugKotlin use VERSION_18
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    // Hilt uses Java VERSION_1_8 but kaptGenerateStubsDebugKotlin use VERSION_18
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 }
 
@@ -44,23 +58,29 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-
-    // Test
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation "androidx.fragment:fragment-ktx:1.6.1"
+    implementation "androidx.activity:activity-ktx:1.7.2"
 
     // Glide for images
-    implementation 'com.github.bumptech.glide:glide:4.15.1'
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
 
     // Faker for fake data
     implementation 'com.github.javafaker:javafaker:1.0.2'
 
-    // View model
-    implementation "androidx.fragment:fragment-ktx:1.6.1"
-    implementation "androidx.activity:activity-ktx:1.7.2"
-
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+}
+
+// Hilt
+kapt {
+    correctErrorTypes true // Allow references to generated code
+}
+
+hilt {
+    enableAggregatingTask = true
 }

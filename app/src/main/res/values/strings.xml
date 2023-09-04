@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">task4</string>
+    <string name="app_name">MessengerApp</string>
 
     <!-- fragment my profile strings -->
 
@@ -14,6 +14,13 @@
     <string name="facebook_icon">facebook_icon</string>
     <string name="linkedin_icon">linkedin_icon</string>
     <string name="instagram_icon">instagram_icon</string>
+
+    <!-- fragment login strings -->
+
+    <string name="hello">Hello!</string>
+    <string name="enter_your_email_and_password_below">Enter your email and password below</string>
+    <string name="sign_up">Sign up</string>
+    <string name="don_t_have_account">Don’t have account?</string>
 
     <!-- fragment auth strings -->
 
@@ -35,6 +42,7 @@
     <string name="contain_upper_case_chars">Must contain upper-case characters</string>
     <string name="contain_digit_chars">Must contain number characters</string>
     <string name="invalid_email_address">Invalid Email Address</string>
+    <string name="invalid_password">Invalid password</string>
 
     <!-- Snackbar message -->
     <string name="message_delete">Contact has been deleted</string>
@@ -56,5 +64,6 @@
     <string name="message">message</string>
     <string name="fragment_my_profile_logout">Logout</string>
     <string name="get_contacts">Get contacts</string>
+    <string name="forgot_your_password">Forgot your password?</string>
 
 </resources>

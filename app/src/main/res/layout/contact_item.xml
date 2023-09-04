@@ -63,9 +63,6 @@
         android:layout_width="@dimen/contact_item_size_icon_delete"
         android:layout_height="@dimen/contact_item_size_icon_delete"
         android:layout_margin="@dimen/margin_small"
-
-        android:clickable="true"
-        android:focusable="true"
         android:src="@drawable/ic_delete"/>
 
 </LinearLayout>
